@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">AmIWrong</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_questions">Questions</string>
+    <string name="title_my_questions">My Questions</string>
+    <string name="title_questions_i_ve_answered">Questions i\'ve answered</string>
+
+
+
+
+
+
+    <string-array name="colors">
+        <item>#50E3C2</item>
+        <item>#F89EF3</item>
+        <item>#4990E2</item>
+        <item>#FF6578</item>
+    </string-array>
 </resources>
