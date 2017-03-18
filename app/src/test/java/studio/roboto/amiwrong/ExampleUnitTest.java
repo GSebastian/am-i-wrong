@@ -1,4 +1,4 @@
-package roboto.studio.hack24;
+package studio.roboto.amiwrong;
 
 import org.junit.Test;
 

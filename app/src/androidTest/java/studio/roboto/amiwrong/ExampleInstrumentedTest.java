@@ -1,4 +1,4 @@
-package roboto.studio.hack24;
+package studio.roboto.amiwrong;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("roboto.studio.hack24", appContext.getPackageName());
+        assertEquals("studio.roboto.amiwrong", appContext.getPackageName());
     }
 }
