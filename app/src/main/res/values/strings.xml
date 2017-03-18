@@ -9,10 +9,8 @@
     <string name="title_questions">Questions</string>
     <string name="title_my_questions">My Questions</string>
     <string name="title_questions_i_ve_answered">Questions i\'ve answered</string>
-
-
-
-
+    <string name="no">NO</string>
+    <string name="yes">YES</string>
 
 
     <string-array name="colors">

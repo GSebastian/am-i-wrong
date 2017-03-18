@@ -5,4 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="white">#FFFFFF</color>
+    <color name="dividerGray">#E2E2E2</color>
+
+    <color name="yes_color">#50E3C2</color>
+    <color name="no_color">#F89EF3</color>
 </resources>

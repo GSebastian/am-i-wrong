@@ -3,9 +3,12 @@ package studio.roboto.hack24.questions;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
@@ -18,6 +21,9 @@ import studio.roboto.hack24.R;
 public class QuestionElementFragment extends Fragment {
 
     private int mPosition;
+
+    private TextView mTvQuestionTitle;
+    private RecyclerView mRlMain;
 
     @Nullable
     @Override
@@ -42,7 +48,8 @@ public class QuestionElementFragment extends Fragment {
     }
 
     private void findViews(View v) {
-
+        mTvQuestionTitle = (TextView) v.findViewById(R.id.tvQuestionTitle);
+        mRlMain = (RecyclerView) v.findViewById(R.id.rvMain);
     }
 
     private void initViews() {
