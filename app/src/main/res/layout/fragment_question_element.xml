@@ -9,6 +9,7 @@
         android:layout_height="?attr/actionBarSize"/>
 
     <RelativeLayout
+        android:elevation="4dp"
         android:id="@+id/rlMain"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
@@ -35,6 +36,33 @@
 
 
         </android.support.v7.widget.RecyclerView>
+
+        <EditText
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="16dp"
+            android:background="@color/lightgray"
+            android:alpha="0.0"
+            android:maxLines="4"
+            android:hint="@string/comment"
+            android:id="@+id/etComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:alpha="0.0"
+            android:visibility="gone"
+            android:id="@+id/etDivider"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorPrimary"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_height="2dp"/>
 
     </RelativeLayout>
     

@@ -125,7 +125,9 @@ public class QuestionRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 if (dataSnapshot != null && dataSnapshot.getValue() != null) {
                     mQuestion = dataSnapshot.getValue(Question.class);
                 }
-                notifyItemChanged(1);
+                if (mVoted != SharedPrefsManager.VOTED.UNANSWERED) {
+                    notifyItemChanged(1);
+                }
             }
 
             @Override

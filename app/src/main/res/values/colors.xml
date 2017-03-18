@@ -9,4 +9,5 @@
 
     <color name="yes_color">#50E3C2</color>
     <color name="no_color">#F89EF3</color>
+    <color name="lightgray">#F5F5F5</color>
 </resources>

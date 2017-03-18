@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,6 +33,8 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback {
     private boolean isUnlocked = false;
 
     private RelativeLayout mRlMain;
+    private EditText mEtComment;
+    private View mEtDivider;
     private LinearLayoutManager mLayoutManager;
     private TextView mTvQuestionTitle;
     private RecyclerView mRvMain;
@@ -77,6 +80,8 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback {
         mTvQuestionTitle = (TextView) v.findViewById(R.id.tvQuestionTitle);
         mRvMain = (RecyclerView) v.findViewById(R.id.rvMain);
         mRlMain = (RelativeLayout) v.findViewById(R.id.rlMain);
+        mEtComment = (EditText) v.findViewById(R.id.etComment);
+        mEtDivider = v.findViewById(R.id.etDivider);
     }
 
     private void initViews() {
@@ -98,7 +103,23 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback {
                 mTvQuestionTitle.setAlpha(alpha);
             }
         });
+        mRvMain.addItemDecoration(new SpaceItemDecoration(getResources().getDimensionPixelSize(R.dimen.edit_text_height)));
         mTvQuestionTitle.setText(mQuestion.text);
+    }
+
+    public void clickedAnswer(boolean wasYes) {
+        mAdapter.itemClicked(wasYes);
+        isUnlocked = true;
+        mEtComment.setVisibility(View.VISIBLE);
+        mEtComment.animate()
+                .alpha(1.0f)
+                .setDuration(400L)
+                .start();
+        mEtDivider.setVisibility(View.VISIBLE);
+        mEtDivider.animate()
+                .alpha(1.0f)
+                .setDuration(400L)
+                .start();
     }
 
     @Override
@@ -110,14 +131,12 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback {
     //region Callbacks YesNoCallback
     @Override
     public void clickedYes() {
-        mAdapter.itemClicked(true);
-        isUnlocked = true;
+        clickedAnswer(true);
     }
 
     @Override
     public void clickedNo() {
-        mAdapter.itemClicked(false);
-        isUnlocked = true;
+        clickedAnswer(false);
     }
 
     @Override

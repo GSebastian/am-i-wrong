@@ -149,6 +149,7 @@ public class HomeActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setStatusBarColour(colour);
         }
+        Utils.hideKeyboard(this, mViewColourChanger);
     }
 
     @Override

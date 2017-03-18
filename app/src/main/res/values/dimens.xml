@@ -6,4 +6,5 @@
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="answer_height">120dp</dimen>
+    <dimen name="edit_text_height">100dp</dimen>
 </resources>
