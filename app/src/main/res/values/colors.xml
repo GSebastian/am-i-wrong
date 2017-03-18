@@ -10,4 +10,5 @@
     <color name="yes_color">#50E3C2</color>
     <color name="no_color">#F89EF3</color>
     <color name="lightgray">#F5F5F5</color>
+    <color name="transparent_black">#33000000</color>
 </resources>

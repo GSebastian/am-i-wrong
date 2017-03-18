@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">AmIWrong</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="app_name">Am I Wrong</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -12,6 +11,7 @@
     <string name="no">NO</string>
     <string name="yes">YES</string>
     <string name="comment">Comment</string>
+    <string name="send">Send</string>
 
 
     <string-array name="colors">

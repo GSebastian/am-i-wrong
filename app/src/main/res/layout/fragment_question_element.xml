@@ -31,38 +31,71 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvMain"
+            android:layout_above="@+id/etBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
 
         </android.support.v7.widget.RecyclerView>
 
-        <EditText
-            android:visibility="gone"
-            android:layout_alignParentBottom="true"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="16dp"
-            android:background="@color/lightgray"
+        <ImageView
             android:alpha="0.0"
-            android:maxLines="4"
-            android:hint="@string/comment"
-            android:id="@+id/etComment"
+            android:visibility="gone"
+            android:id="@+id/etBackground"
+            android:background="@color/lightgray"
+            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
+            android:layout_alignTop="@+id/etContent"
             android:layout_height="wrap_content" />
 
-        <View
+        <Button
+            android:enabled="false"
+            android:foreground="?attr/selectableItemBackground"
+            android:alpha="0.0"
+            android:elevation="0dp"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:padding="8dp"
+            android:background="@color/transparent"
+            android:id="@+id/tvSend"
+            android:text="@string/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/etContent" />
+
+        <EditText
             android:alpha="0.0"
             android:visibility="gone"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_toLeftOf="@id/tvSend"
+            android:layout_toStartOf="@id/tvSend"
+            android:background="@color/lightgray"
+            android:padding="8dp"
+            android:maxLines="4"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:hint="@string/comment"
+            android:layout_height="wrap_content"
+            android:id="@+id/etContent" />
+
+        <ImageView
+            android:alpha="0.0"
+            android:visibility="gone"
+            android:src="@color/colorPrimary"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:id="@+id/etDivider"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_marginBottom="8dp"
-            android:background="@color/colorPrimary"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_height="2dp"/>
+            android:layout_height="1dp"
+            android:layout_marginBottom="8dp"/>
 
     </RelativeLayout>
     

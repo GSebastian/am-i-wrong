@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +19,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import studio.roboto.hack24.questions.QuestionFragment;
 
@@ -29,6 +32,7 @@ public class HomeActivity extends AppCompatActivity
     private View mViewColourChanger;
     private int[] mColoursForTransitions;
     private ArgbEvaluator mColorTransitioner;
+    private ImageView mImgHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,7 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        mImgHeader = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imgHeader);
 
         showFragment(QuestionFragment.TAG);
     }
@@ -110,6 +115,7 @@ public class HomeActivity extends AppCompatActivity
 
     private void showFragment(String tag) {
         if (tag.equals(QuestionFragment.TAG)) {
+            setTitle(R.string.app_name);
             showFragment(QuestionFragment.TAG, new QuestionFragment());
         }
     }

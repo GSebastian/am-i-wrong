@@ -14,6 +14,8 @@ public class Comment {
     public Comment(String text, long timestamp, String name, boolean yes) {
         this.text = text;
         this.timestamp = timestamp;
+        this.name = name;
+        this.yes = yes;
     }
 
     public Comment() {

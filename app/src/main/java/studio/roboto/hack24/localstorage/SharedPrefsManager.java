@@ -46,7 +46,7 @@ public class SharedPrefsManager implements ISharedPrefsManager {
 
     @Override
     public String getCurrentName() {
-        return mPrefs.getString(KEY_NAME, null);
+        return mPrefs.getString(KEY_NAME, "Anonymous");
     }
 
     @Override
@@ -86,7 +86,7 @@ public class SharedPrefsManager implements ISharedPrefsManager {
 
         mPrefs
                 .edit()
-                .putString(KEY_ANSWERED_QUESTION_ID_YESNO, (wasYes ? "YES" : "NO"))
+                .putString(KEY_ANSWERED_QUESTION_ID_YESNO + questionId, (wasYes ? "YES" : "NO"))
                 .apply();
     }
 
@@ -98,7 +98,7 @@ public class SharedPrefsManager implements ISharedPrefsManager {
 
     @Override
     public boolean haveIAnsweredQuestion(String questionId) {
-        return getMyQuestionIds().contains(questionId);
+        return getAnsweredQuestionsIds().contains(questionId);
     }
 
     @Override
