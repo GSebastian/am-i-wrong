@@ -13,8 +13,11 @@
     <string name="comment">Comment</string>
     <string name="ask">Ask</string>
     <string name="new_question_hint">I just smuggled a llama from the city zoo. Was I right?</string>
-    <string name="chars_remaining">%d/150</string>
+    <string name="chars_remaining">%1$d/%2$d</string>
 	<string name="send">Send</string>
+    <string name="add_question_loading_message">Adding your question ...</string>
+    <string name="question_add_failed_message">Oops! We couldn\'t post your question. Please try again later!</string>
+    <string name="dismiss">Dismiss</string>
 
     <string-array name="colors">
         <item>#50E3C2</item>

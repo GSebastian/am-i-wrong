@@ -1,5 +1,10 @@
 package studio.roboto.hack24.firebase;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 
@@ -8,6 +13,7 @@ import studio.roboto.hack24.firebase.models.Comment;
 import studio.roboto.hack24.firebase.models.Question;
 import studio.roboto.hack24.firebase.models.VoteTask;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
+import studio.roboto.hack24.questions.OnQuestionAddedListener;
 
 public class FirebaseConnector {
 
@@ -38,7 +44,7 @@ public class FirebaseConnector {
                 .child(questionId);
     }
 
-    public static Task<Void> addQuestion(String questionText) {
+    public static void addQuestion(String questionText, @Nullable final OnQuestionAddedListener listener) {
         Question newQuestion = new Question(
                 questionText,
                 Utils.getTimestamp());
@@ -49,9 +55,27 @@ public class FirebaseConnector {
                         .databaseRef
                         .child("Questions");
 
-        String newQuestionKey = questionsNode.push().getKey();
+        final String newQuestionKey = questionsNode.push().getKey();
 
-        return questionsNode.child(newQuestionKey).setValue(newQuestion.toMap());
+        questionsNode
+                .child(newQuestionKey)
+                .setValue(newQuestion.toMap())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (listener != null) {
+                            listener.questionAdded(newQuestionKey);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (listener != null) {
+                            listener.questionAddFailed();
+                        }
+                    }
+                });
     }
 
     public static DatabaseReference getQuestions() {

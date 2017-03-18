@@ -29,6 +29,8 @@ public class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter impl
 
     private DatabaseReference mQuestionRef;
 
+    private OnQuestionAddedListener mOnQuestionAddedListener;
+
     public QuestionFragmentPagerAdapter(FragmentManager manager, Context context) {
         super(manager);
         this.mContext = context;
@@ -55,6 +57,8 @@ public class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter impl
             bundle.putInt("KEY", position);
             newQuestionFragment.setArguments(bundle);
 
+            newQuestionFragment.setOnQuestionAddedListener(mOnQuestionAddedListener);
+
             return newQuestionFragment;
         } else {
             position -= 1;
@@ -75,6 +79,10 @@ public class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter impl
 
     public void stop() {
         mQuestionRef.removeEventListener(this);
+    }
+
+    public void setOnQuestionAddedListener(OnQuestionAddedListener onQuestionAddedListener) {
+        this.mOnQuestionAddedListener = onQuestionAddedListener;
     }
 
     //region Callbacks ChildEventListener
