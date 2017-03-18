@@ -1,5 +1,6 @@
 package studio.roboto.hack24.firebase;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 
 import studio.roboto.hack24.Utils;
@@ -37,7 +38,7 @@ public class FirebaseConnector {
                 .child(questionId);
     }
 
-    public static void addQuestion(String questionText) {
+    public static Task<Void> addQuestion(String questionText) {
         Question newQuestion = new Question(
                 questionText,
                 Utils.getTimestamp());
@@ -50,7 +51,7 @@ public class FirebaseConnector {
 
         String newQuestionKey = questionsNode.push().getKey();
 
-        questionsNode.child(newQuestionKey).setValue(newQuestion.toMap());
+        return questionsNode.child(newQuestionKey).setValue(newQuestion.toMap());
     }
 
     public static DatabaseReference getQuestions() {
