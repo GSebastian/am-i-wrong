@@ -5,6 +5,7 @@ import com.google.firebase.database.DatabaseReference;
 import studio.roboto.hack24.Utils;
 import studio.roboto.hack24.firebase.models.Comment;
 import studio.roboto.hack24.firebase.models.Question;
+import studio.roboto.hack24.firebase.models.VoteTask;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
 public class FirebaseConnector {
@@ -67,12 +68,21 @@ public class FirebaseConnector {
                 .child(questionId);
     }
 
-    public static void voteYes(String questionId) {
-        // Create a "YES" task
-    }
+    public static void vote(String questionId, boolean yes) {
+        VoteTask voteTask = new VoteTask(
+                yes,
+                questionId);
 
-    public static void voteNo(String questionId) {
-        // Create a "NO" task
+        DatabaseReference tasksNode =
+                FirebaseManager
+                        .sharedInstance
+                        .databaseRef
+                        .child("Queue")
+                        .child("tasks");
+
+        String newTaskKey = tasksNode.push().getKey();
+
+        tasksNode.child(newTaskKey).setValue(voteTask.toMap());
     }
 
     private static DatabaseReference getRemoteNames() {
