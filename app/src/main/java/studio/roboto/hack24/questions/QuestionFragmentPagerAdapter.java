@@ -5,18 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.LayoutInflaterCompat;
-import android.support.v4.view.PagerAdapter;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +38,7 @@ public class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter impl
 
     @Override
     public int getCount() {
-        return questions.size();
+        return 1 + questions.size();
     }
 
     @Override
@@ -54,16 +48,29 @@ public class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter impl
 
     @Override
     public Fragment getItem(int position) {
-        QuestionElementFragment frag = new QuestionElementFragment();
-        Bundle b = new Bundle();
-        b.putInt("KEY", position);
-        b.putString("QUESTION_ID", questions.get(position).id);
-        b.putString("QUESTION_TEXT", questions.get(position).text);
-        b.putLong("QUESTION_TIMESTAMP", questions.get(position).timestamp);
-        b.putLong("QUESTION_YES", questions.get(position).yes);
-        b.putLong("QUESTION_NO", questions.get(position).no);
-        frag.setArguments(b);
-        return frag;
+        if (position == 0) {
+            NewQuestionFragment newQuestionFragment = new NewQuestionFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("KEY", position);
+            newQuestionFragment.setArguments(bundle);
+
+            return newQuestionFragment;
+        } else {
+            position -= 1;
+
+            QuestionElementFragment frag = new QuestionElementFragment();
+            Bundle b = new Bundle();
+            b.putInt("KEY", position + 1);
+            b.putString("QUESTION_ID", questions.get(position).id);
+            b.putString("QUESTION_TEXT", questions.get(position).text);
+            b.putLong("QUESTION_TIMESTAMP", questions.get(position).timestamp);
+            b.putLong("QUESTION_YES", questions.get(position).yes);
+            b.putLong("QUESTION_NO", questions.get(position).no);
+            frag.setArguments(b);
+
+            return frag;
+        }
     }
 
     public void stop() {

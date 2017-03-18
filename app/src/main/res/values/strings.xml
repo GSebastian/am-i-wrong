@@ -12,6 +12,9 @@
     <string name="no">NO</string>
     <string name="yes">YES</string>
     <string name="comment">Comment</string>
+    <string name="ask">Ask</string>
+    <string name="new_question_hint">I just smuggled a llama from the city zoo. Was I right?</string>
+    <string name="chars_remaining">%d/150</string>
 
 
     <string-array name="colors">

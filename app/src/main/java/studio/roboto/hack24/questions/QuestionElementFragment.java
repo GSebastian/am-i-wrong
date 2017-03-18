@@ -10,13 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import studio.roboto.hack24.R;
+import studio.roboto.hack24.firebase.FirebaseConnector;
 import studio.roboto.hack24.firebase.models.Question;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
 import studio.roboto.hack24.questions.viewholder.YesNoCallback;
@@ -120,6 +120,8 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback {
                 .alpha(1.0f)
                 .setDuration(400L)
                 .start();
+
+        FirebaseConnector.vote(mQuestion.id, wasYes);
     }
 
     @Override
