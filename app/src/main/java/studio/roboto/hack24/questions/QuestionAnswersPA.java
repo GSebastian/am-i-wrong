@@ -24,6 +24,11 @@ public class QuestionAnswersPA extends QuestionFragmentPagerAdapter {
     }
 
     @Override
+    public void added(Question question) {
+
+    }
+
+    @Override
     public boolean showNew() {
         return false;
     }

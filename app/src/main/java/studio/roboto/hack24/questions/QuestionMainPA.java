@@ -4,9 +4,9 @@ import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
 import com.google.firebase.database.DatabaseReference;
+import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import studio.roboto.hack24.firebase.FirebaseConnector;
-import studio.roboto.hack24.firebase.FirebaseManager;
 import studio.roboto.hack24.firebase.models.Question;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
@@ -15,13 +15,24 @@ import studio.roboto.hack24.localstorage.SharedPrefsManager;
  */
 
 public class QuestionMainPA extends QuestionFragmentPagerAdapter {
-    public QuestionMainPA(FragmentManager manager, Context context) {
+
+    private EnchantedViewPager pager;
+
+    public QuestionMainPA(FragmentManager manager, Context context, EnchantedViewPager pager) {
         super(manager, context);
+        this.pager = pager;
     }
 
     @Override
     public boolean shouldAdd(Question question) {
         return !SharedPrefsManager.sharedInstance.haveIAnsweredQuestion(question.id);
+    }
+
+    @Override
+    public void added(Question question) {
+//        if (SharedPrefsManager.sharedInstance.getMyQuestionIds().contains(question.id)) {
+//            pager.setCurrentItem(getCount() - 1);
+//        }
     }
 
     @Override

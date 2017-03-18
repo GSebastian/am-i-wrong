@@ -11,13 +11,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import studio.roboto.hack24.HomeActivity;
 import studio.roboto.hack24.R;
-import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
 /**
  * Created by jordan on 18/03/17.
@@ -69,7 +67,8 @@ public class QuestionFragment extends Fragment implements OnQuestionAddedListene
     }
 
     private void initViews() {
-        mAdapter = new QuestionMainPA(getFragmentManager(), getContext());
+        mAdapter = new QuestionMainPA(getFragmentManager(), getContext(), mEnchVP);
+        mAdapter.setOnQuestionAddedListener(this);
         mEnchVP.setAdapter(mAdapter);
 
 //        if (!SharedPrefsManager.sharedInstance.isFirstOpen()) {

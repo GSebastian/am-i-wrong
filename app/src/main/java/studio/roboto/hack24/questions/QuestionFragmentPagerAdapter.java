@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.view.ViewGroup;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -15,9 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import studio.roboto.hack24.firebase.FirebaseConnector;
 import studio.roboto.hack24.firebase.models.Question;
-import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
 /**
  * Created by jordan on 18/03/17.
@@ -84,6 +81,8 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
 
     public abstract boolean shouldAdd(Question question);
 
+    public abstract void added(Question question);
+
     public abstract boolean showNew();
 
     public abstract DatabaseReference getRef();
@@ -97,6 +96,7 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
             if (shouldAdd(question)) {
                 questions.add(question);
                 notifyDataSetChanged();
+                added(question);
             }
         }
     }
