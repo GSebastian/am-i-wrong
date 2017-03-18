@@ -25,13 +25,13 @@
     <string name="go">Go!</string>
 
     <string-array name="colors">
-        <item>#50E3C2</item>
-        <item>#F89EF3</item>
-        <item>#4990E2</item>
-        <item>#FF6578</item>
-        <item>#FFB300</item>
-        <item>#546E7A</item>
-        <item>#7CB342</item>
+        <item>#0097A7</item>
+        <item>#d32f2f</item>
+        <item>#388E3C</item>
+        <item>#7B1FA2</item>
+        <item>#E64A19</item>
+        <item>#616161</item>
+        <item>#C2185B</item>
     </string-array>
 
     <string-array name="names">
