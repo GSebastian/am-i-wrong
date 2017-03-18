@@ -141,16 +141,17 @@ public class HomeActivity extends AppCompatActivity
         int r = Color.red(color);
         int b = Color.blue(color);
         int g = Color.green(color);
-        return Color.rgb((int)(r*STATUS_BAR_DARKEN_MULTIPLIER), (int)(g*STATUS_BAR_DARKEN_MULTIPLIER), (int)(b*STATUS_BAR_DARKEN_MULTIPLIER));
+        return Color.rgb((int) (r * STATUS_BAR_DARKEN_MULTIPLIER), (int) (g * STATUS_BAR_DARKEN_MULTIPLIER), (int) (b
+                * STATUS_BAR_DARKEN_MULTIPLIER));
     }
 
     //region Callbacks OnPageChangedListener
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        if (position >= (mColoursForTransitions.length - 1)) {
-            position %= (mColoursForTransitions.length - 1);
-        }
-        int colour = (Integer) mColorTransitioner.evaluate(positionOffset, mColoursForTransitions[position], mColoursForTransitions[position + 1]);
+        int colour = (Integer) mColorTransitioner.evaluate(
+                positionOffset,
+                mColoursForTransitions[position % mColoursForTransitions.length],
+                mColoursForTransitions[(position + 1) % mColoursForTransitions.length]);
         mViewColourChanger.setBackgroundColor(colour);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setStatusBarColour(colour);
