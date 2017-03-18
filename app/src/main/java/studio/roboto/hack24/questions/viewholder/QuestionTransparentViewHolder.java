@@ -11,4 +11,8 @@ public class QuestionTransparentViewHolder extends RecyclerView.ViewHolder {
     public QuestionTransparentViewHolder(View itemView) {
         super(itemView);
     }
+
+    public void init() {
+
+    }
 }

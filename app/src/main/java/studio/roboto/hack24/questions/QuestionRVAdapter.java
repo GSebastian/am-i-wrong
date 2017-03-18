@@ -93,7 +93,7 @@ public class QuestionRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             if (mVoted == VOTED.UNVOTED) {
                 ((QuestionYesNoViewHolder) holder).showOptions();
             } else {
-                ((QuestionYesNoViewHolder) holder).showResults();
+                ((QuestionYesNoViewHolder) holder).showResults(0, 0);
             }
         } else {
             ((QuestionCommentViewHolder)holder).bind(comments.get(position - 2));
