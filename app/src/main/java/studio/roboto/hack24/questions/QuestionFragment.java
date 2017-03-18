@@ -16,7 +16,7 @@ import studio.roboto.hack24.R;
  * Created by jordan on 18/03/17.
  */
 
-public class QuestionsFragment extends Fragment {
+public class QuestionFragment extends Fragment {
 
     public static final String TAG = "QUESTIONS";
 
@@ -45,4 +45,9 @@ public class QuestionsFragment extends Fragment {
         mEnchVP.setAdapter(mAdapter);
     }
 
+    @Override
+    public void onDestroy() {
+        mAdapter.stop();
+        super.onDestroy();
+    }
 }

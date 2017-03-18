@@ -14,6 +14,13 @@ public class SharedPrefsManager implements ISharedPrefsManager {
     private static final String KEY_NAME = "name";
     private static final String KEY_MY_QUESTION_IDS = "my-question-ids";
     private static final String KEY_ANSWERED_QUESTION_IDS = "answered-question-ids";
+    private static final String KEY_ANSWERED_QUESTION_ID_YESNO = "answered-question-id-yesno-";
+
+    public enum VOTED {
+        UNANSWERED,
+        YES,
+        NO
+    }
 
     private Context mContext;
     private SharedPreferences mPrefs;
@@ -64,7 +71,7 @@ public class SharedPrefsManager implements ISharedPrefsManager {
     }
 
     @Override
-    public void addAnsweredQuestionId(String questionId) {
+    public void addAnsweredQuestionId(String questionId, boolean wasYes) {
         String answeredQuestionsIdsString = mPrefs.getString(KEY_ANSWERED_QUESTION_IDS, "");
         List<String> answeredQuestionsIds = getListFromString(answeredQuestionsIdsString);
 
@@ -76,6 +83,11 @@ public class SharedPrefsManager implements ISharedPrefsManager {
                 .edit()
                 .putString(KEY_ANSWERED_QUESTION_IDS, newString)
                 .apply();
+
+        mPrefs
+                .edit()
+                .putString(KEY_ANSWERED_QUESTION_ID_YESNO, (wasYes ? "YES" : "NO"))
+                .apply();
     }
 
     @Override
@@ -83,6 +95,26 @@ public class SharedPrefsManager implements ISharedPrefsManager {
         String storedString = mPrefs.getString(KEY_ANSWERED_QUESTION_IDS, "");
         return getListFromString(storedString);
     }
+
+    @Override
+    public boolean haveIAnsweredQuestion(String questionId) {
+        return getMyQuestionIds().contains(questionId);
+    }
+
+    @Override
+    public VOTED whatDidIAnswer(String question) {
+        if (haveIAnsweredQuestion(question)) {
+            String value = mPrefs.getString(KEY_ANSWERED_QUESTION_ID_YESNO + question, "");
+            if (value.equals("YES"))
+                return VOTED.YES;
+            if (value.equals("NO"))
+                return VOTED.NO;
+            return VOTED.UNANSWERED;
+        } else {
+            return VOTED.UNANSWERED;
+        }
+    }
+
 
     //region Utility
     private static final String DELIMITER = "_";

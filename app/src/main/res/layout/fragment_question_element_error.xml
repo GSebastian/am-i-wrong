@@ -9,7 +9,6 @@
         android:layout_height="?attr/actionBarSize"/>
 
     <RelativeLayout
-        android:id="@+id/rlMain"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:layout_below="@id/commentView"
@@ -18,24 +17,14 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:paddingTop="72dp"
-            android:paddingLeft="32dp"
-            android:paddingRight="32dp"
-            android:paddingBottom="12dp"
+            android:padding="32dp"
             android:textSize="22sp"
             android:gravity="center"
+            android:text="Woops! Something happened\n\n:("
             android:id="@+id/tvQuestionTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvMain"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-        </android.support.v7.widget.RecyclerView>
-
     </RelativeLayout>
-    
+
 </RelativeLayout>

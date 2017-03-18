@@ -12,7 +12,11 @@ public interface ISharedPrefsManager {
 
     public List<String> getMyQuestionIds();
 
-    public void addAnsweredQuestionId(String questionId);
+    public void addAnsweredQuestionId(String questionId, boolean wasYes);
 
     public List<String> getAnsweredQuestionsIds();
+
+    public boolean haveIAnsweredQuestion(String question);
+
+    public SharedPrefsManager.VOTED whatDidIAnswer(String question);
 }

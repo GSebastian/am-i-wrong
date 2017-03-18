@@ -12,28 +12,39 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import studio.roboto.hack24.firebase.FirebaseConnector;
+import studio.roboto.hack24.firebase.models.Question;
+
 /**
  * Created by jordan on 18/03/17.
  */
 
-public class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter{
+public class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter implements ChildEventListener {
 
     private Context mContext;
-    private List<View> views = new ArrayList<>();
+    private List<Question> questions = new ArrayList<>();
+
+    private DatabaseReference mQuestionRef;
 
     public QuestionFragmentPagerAdapter(FragmentManager manager, Context context) {
         super(manager);
         this.mContext = context;
+        this.mQuestionRef = FirebaseConnector.getQuestions();
+        this.mQuestionRef.addChildEventListener(this);
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return questions.size();
     }
 
     @Override
@@ -46,7 +57,48 @@ public class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter{
         QuestionElementFragment frag = new QuestionElementFragment();
         Bundle b = new Bundle();
         b.putInt("KEY", position);
+        b.putString("QUESTION_ID", questions.get(position).id);
+        b.putString("QUESTION_TEXT", questions.get(position).text);
+        b.putLong("QUESTION_TIMESTAMP", questions.get(position).timestamp);
+        b.putLong("QUESTION_YES", questions.get(position).yes);
+        b.putLong("QUESTION_NO", questions.get(position).no);
         frag.setArguments(b);
         return frag;
     }
+
+    public void stop() {
+        mQuestionRef.removeEventListener(this);
+    }
+
+    //region Callbacks ChildEventListener
+    @Override
+    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        if (dataSnapshot != null && dataSnapshot.getValue() != null) {
+            Question question = dataSnapshot.getValue(Question.class);
+            question.id = dataSnapshot.getKey();
+            questions.add(question);
+            notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+    }
+
+    @Override
+    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+    }
+
+    @Override
+    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
+    }
+    //endregion
 }

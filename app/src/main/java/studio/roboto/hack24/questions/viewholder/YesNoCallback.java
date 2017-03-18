@@ -7,4 +7,6 @@ package studio.roboto.hack24.questions.viewholder;
 public interface YesNoCallback {
     void clickedYes();
     void clickedNo();
+    int heightOfFrag();
+    int heightOfText();
 }

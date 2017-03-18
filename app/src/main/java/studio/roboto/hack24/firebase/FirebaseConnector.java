@@ -39,7 +39,6 @@ public class FirebaseConnector {
     public static void addQuestion(String questionText) {
         Question newQuestion = new Question(
                 questionText,
-                SharedPrefsManager.sharedInstance.getCurrentName(),
                 Utils.getTimestamp());
 
         DatabaseReference questionsNode =
@@ -58,6 +57,14 @@ public class FirebaseConnector {
                 .sharedInstance
                 .databaseRef
                 .child("Questions");
+    }
+
+    public static DatabaseReference getQuestion(String questionId) {
+        return FirebaseManager
+                .sharedInstance
+                .databaseRef
+                .child("Questions")
+                .child(questionId);
     }
 
     public static void voteYes(String questionId) {

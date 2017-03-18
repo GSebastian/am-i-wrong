@@ -10,9 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +19,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
-import studio.roboto.hack24.questions.QuestionsFragment;
+import studio.roboto.hack24.questions.QuestionFragment;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
@@ -51,7 +49,7 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        showFragment(QuestionsFragment.TAG);
+        showFragment(QuestionFragment.TAG);
     }
 
     @Override
@@ -86,7 +84,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_questions) {
-            showFragment(QuestionsFragment.TAG);
+            showFragment(QuestionFragment.TAG);
         } else if (id == R.id.nav_myquestions) {
 
         } else if (id == R.id.nav_comments) {
@@ -111,8 +109,8 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void showFragment(String tag) {
-        if (tag.equals(QuestionsFragment.TAG)) {
-            showFragment(QuestionsFragment.TAG, new QuestionsFragment());
+        if (tag.equals(QuestionFragment.TAG)) {
+            showFragment(QuestionFragment.TAG, new QuestionFragment());
         }
     }
 

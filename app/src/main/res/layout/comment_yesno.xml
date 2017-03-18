@@ -1,6 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:id="@+id/rlPercentages">
+
+        <View
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="67dp"
+            android:id="@+id/divview"
+            android:background="@color/dividerGray"
+            android:layout_width="1dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="65dp"/>
+
+        <TextView
+            android:id="@+id/tvNo"
+            android:padding="16dp"
+            android:gravity="end|center"
+            android:textSize="18sp"
+            android:text="@string/no"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_toStartOf="@id/divview"
+            android:layout_toLeftOf="@id/divview"
+            android:layout_width="match_parent"
+            android:layout_height="65dp" />
+
+        <TextView
+            android:id="@+id/tvYes"
+            android:padding="16dp"
+            android:gravity="start|center"
+            android:textSize="18sp"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="@string/yes"
+            android:layout_toRightOf="@id/divview"
+            android:layout_toEndOf="@id/divview"
+            android:layout_width="match_parent"
+            android:layout_height="65dp" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlButtons"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/answer_height">
+
+        <View
+            android:id="@+id/view"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@color/dividerGray"
+            android:layout_width="1dp"
+            android:layout_centerInParent="true"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:id="@+id/btnNo"
+            android:textSize="22sp"
+            android:text="@string/no"
+            android:foreground="?attr/selectableItemBackground"
+            android:background="@color/white"
+            android:layout_toStartOf="@id/view"
+            android:layout_toLeftOf="@id/view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/btnYes"
+            android:textSize="22sp"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="@string/yes"
+            android:background="@color/white"
+            android:layout_toRightOf="@id/view"
+            android:layout_toEndOf="@id/view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
 
 </LinearLayout>

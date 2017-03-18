@@ -15,24 +15,24 @@ import studio.roboto.hack24.firebase.models.Comment;
 
 public class QuestionCommentViewHolder extends RecyclerView.ViewHolder {
 
-    private View mViewBar;
+    private ImageView mViewBar;
     private TextView mTvName;
     private TextView mTvContent;
 
     public QuestionCommentViewHolder(View itemView) {
         super(itemView);
-        mViewBar = itemView.findViewById(R.id.commentView);
+        mViewBar = (ImageView) itemView.findViewById(R.id.commentView);
         mTvName = (TextView) itemView.findViewById(R.id.tvName);
         mTvContent = (TextView) itemView.findViewById(R.id.tvContent);
     }
 
     public void bind(Comment comment) {
-        mTvName.setText(comment.text);
-//        mTvContent.setText(comment.name);
-//        if (comment.yes) {
-//            mViewBar.setBackgroundColor(ContextCompat.getColor(mViewBar.getContext(), R.color.yes_color));
-//        } else {
-//            mViewBar.setBackgroundColor(ContextCompat.getColor(mViewBar.getContext(), R.color.no_color));
-//        }
+        mTvName.setText(comment.name);
+        mTvContent.setText(comment.text);
+        if (comment.yes) {
+            mViewBar.setBackgroundColor(ContextCompat.getColor(mViewBar.getContext(), R.color.yes_color));
+        } else {
+            mViewBar.setBackgroundColor(ContextCompat.getColor(mViewBar.getContext(), R.color.no_color));
+        }
     }
 }
