@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -127,6 +130,7 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback, 
 
     public void clickedAnswer(boolean wasYes) {
         mAdapter.itemClicked(wasYes);
+        FirebaseConnector.vote(mQuestion.id, wasYes);
         SharedPrefsManager.sharedInstance.addAnsweredQuestionId(mQuestion.id, wasYes);
         isUnlocked = true;
 
@@ -154,7 +158,6 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback, 
         if (v == mEtSend) {
             SharedPrefsManager.VOTED vote = SharedPrefsManager.sharedInstance.whatDidIAnswer(mQuestion.id);
             if (vote != SharedPrefsManager.VOTED.UNANSWERED && mEtSend.getText().toString().trim().length() >= 1) {
-                mEtSend.setEnabled(false);
                 FirebaseConnector.addComment(mQuestion.id, mEtComment.getText().toString().trim(), vote == SharedPrefsManager.VOTED.YES);
                 mEtComment.setText("");
                 mLayoutManager.scrollToPosition(2);

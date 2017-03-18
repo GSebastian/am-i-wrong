@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,11 +22,16 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import studio.roboto.hack24.localstorage.SharedPrefsManager;
+import studio.roboto.hack24.mycontent.QuestionsIveAnsweredFragment;
+import studio.roboto.hack24.mycontent.QuestionsPostedFragment;
+import studio.roboto.hack24.questions.NameDialog;
 import studio.roboto.hack24.questions.QuestionFragment;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, NameDialog.NameConfirmedCallback {
 
     private static final float STATUS_BAR_DARKEN_MULTIPLIER = 0.85f;
 
@@ -33,6 +39,8 @@ public class HomeActivity extends AppCompatActivity
     private int[] mColoursForTransitions;
     private ArgbEvaluator mColorTransitioner;
     private ImageView mImgHeader;
+    private TextView mTvName;
+    private NameDialog mNameDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +50,7 @@ public class HomeActivity extends AppCompatActivity
         setupAndInitColourTransitioner();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -53,8 +62,16 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         mImgHeader = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imgHeader);
+        mTvName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.name);
 
         showFragment(QuestionFragment.TAG);
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        if (SharedPrefsManager.sharedInstance.isFirstOpen()) {
+            mNameDialog = NameDialog.create(this);
+            mNameDialog.getDialog(this).show();
+            // SharedPrefsManager.sharedInstance.firstOpen();
+        }
     }
 
     @Override
@@ -67,21 +84,6 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -91,9 +93,9 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_questions) {
             showFragment(QuestionFragment.TAG);
         } else if (id == R.id.nav_myquestions) {
-
+            showFragment(QuestionsPostedFragment.TAG);
         } else if (id == R.id.nav_comments) {
-
+            showFragment(QuestionsIveAnsweredFragment.TAG);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -117,6 +119,14 @@ public class HomeActivity extends AppCompatActivity
         if (tag.equals(QuestionFragment.TAG)) {
             setTitle(R.string.app_name);
             showFragment(QuestionFragment.TAG, new QuestionFragment());
+        }
+        if (tag.equals(QuestionsIveAnsweredFragment.TAG)) {
+            setTitle(R.string.questions_ive_answered);
+            showFragment(QuestionsIveAnsweredFragment.TAG, new QuestionsIveAnsweredFragment());
+        }
+        if (tag.equals(QuestionsPostedFragment.TAG)) {
+            setTitle(R.string.questions_posted);
+            showFragment(QuestionsPostedFragment.TAG, new QuestionsPostedFragment());
         }
     }
 
@@ -167,6 +177,13 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+    //endregion
+
+    //region Callback Name Confirmed
+    @Override
+    public void nameConfirmed(String name) {
+        mTvName.setText("Commenting as: " + name);
     }
     //endregion
 }

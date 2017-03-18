@@ -17,12 +17,13 @@ import java.util.List;
 
 import studio.roboto.hack24.firebase.FirebaseConnector;
 import studio.roboto.hack24.firebase.models.Question;
+import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
 /**
  * Created by jordan on 18/03/17.
  */
 
-public class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter implements ChildEventListener {
+public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter implements ChildEventListener {
 
     private Context mContext;
     private List<Question> questions = new ArrayList<>();
@@ -32,23 +33,18 @@ public class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter impl
     public QuestionFragmentPagerAdapter(FragmentManager manager, Context context) {
         super(manager);
         this.mContext = context;
-        this.mQuestionRef = FirebaseConnector.getQuestions();
+        this.mQuestionRef = getRef();
         this.mQuestionRef.addChildEventListener(this);
     }
 
     @Override
     public int getCount() {
-        return 1 + questions.size();
-    }
-
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        return super.instantiateItem(container, position);
+        return (showNew() ? 1 : 0) + questions.size();
     }
 
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
+        if (position == 0 && showNew()) {
             NewQuestionFragment newQuestionFragment = new NewQuestionFragment();
 
             Bundle bundle = new Bundle();
@@ -57,11 +53,11 @@ public class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter impl
 
             return newQuestionFragment;
         } else {
-            position -= 1;
+            position -= (showNew() ? 1 : 0);
 
             QuestionElementFragment frag = new QuestionElementFragment();
             Bundle b = new Bundle();
-            b.putInt("KEY", position + 1);
+            b.putInt("KEY", position + (showNew() ? 1 : 0));
             b.putString("QUESTION_ID", questions.get(position).id);
             b.putString("QUESTION_TEXT", questions.get(position).text);
             b.putLong("QUESTION_TIMESTAMP", questions.get(position).timestamp);
@@ -77,14 +73,22 @@ public class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter impl
         mQuestionRef.removeEventListener(this);
     }
 
+    public abstract boolean shouldAdd(Question question);
+
+    public abstract boolean showNew();
+
+    public abstract DatabaseReference getRef();
+
     //region Callbacks ChildEventListener
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
         if (dataSnapshot != null && dataSnapshot.getValue() != null) {
             Question question = dataSnapshot.getValue(Question.class);
             question.id = dataSnapshot.getKey();
-            questions.add(question);
-            notifyDataSetChanged();
+            if (shouldAdd(question)) {
+                questions.add(question);
+                notifyDataSetChanged();
+            }
         }
     }
 

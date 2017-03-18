@@ -78,7 +78,7 @@ public class SharedPrefsManager implements ISharedPrefsManager {
         answeredQuestionsIds.add(questionId);
 
         String newString = mapListToString(answeredQuestionsIds);
-
+        System.out.println("newString = " + newString);
         mPrefs
                 .edit()
                 .putString(KEY_ANSWERED_QUESTION_IDS, newString)
@@ -115,9 +115,22 @@ public class SharedPrefsManager implements ISharedPrefsManager {
         }
     }
 
+    private static final String APP_FIRST_OPEN = "app-first-open";
+
+    public boolean isFirstOpen() {
+        return mPrefs.getBoolean(APP_FIRST_OPEN, true);
+    }
+
+    public void firstOpen() {
+        mPrefs
+                .edit()
+                .putBoolean(APP_FIRST_OPEN, false)
+                .apply();
+    }
+
 
     //region Utility
-    private static final String DELIMITER = "_";
+    private static final String DELIMITER = "#";
 
     static String mapListToString(List<String> list) {
         String result = "";

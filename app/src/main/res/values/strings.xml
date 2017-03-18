@@ -15,11 +15,31 @@
     <string name="new_question_hint">I just smuggled a llama from the city zoo. Was I right?</string>
     <string name="chars_remaining">%d/150</string>
 	<string name="send">Send</string>
+    <string name="questions_posted">My Questions</string>
+    <string name="questions_ive_answered">My Answers</string>
+    <string name="add">Add</string>
+    <string name="posting_as">This name will not be used whilst posting, but it will whilst commenting.\n\nYou can change this any time from the menu</string>
+    <string name="enter_name">Enter name</string>
+    <string name="anonymous">Anonymous</string>
+    <string name="random">Random</string>
+    <string name="go">Go!</string>
 
     <string-array name="colors">
         <item>#50E3C2</item>
         <item>#F89EF3</item>
         <item>#4990E2</item>
         <item>#FF6578</item>
+        <item>#FFB300</item>
+        <item>#546E7A</item>
+        <item>#7CB342</item>
+    </string-array>
+
+    <string-array name="names">
+        <item>The Limp Lizard</item>
+        <item>The Aspirational Giraffe</item>
+        <item>The Fat Panda</item>
+        <item>The Quirky Duck</item>
+        <item>The Mental Goose</item>
+        <item>The Lazy Toerag</item>
     </string-array>
 </resources>
