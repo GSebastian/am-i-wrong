@@ -1,4 +1,4 @@
-package studio.roboto.amiwrong;
+package studio.roboto.hack24;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

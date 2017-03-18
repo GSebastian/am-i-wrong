@@ -1,4 +1,4 @@
-package studio.roboto.amiwrong;
+package studio.roboto.hack24;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
