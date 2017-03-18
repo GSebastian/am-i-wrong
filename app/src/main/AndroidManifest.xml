@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".Hack24Application"
         android:theme="@style/AppTheme">
         <activity android:name="studio.roboto.hack24.MainActivity">
             <intent-filter>
