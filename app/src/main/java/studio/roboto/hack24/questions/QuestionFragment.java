@@ -1,8 +1,10 @@
 package studio.roboto.hack24.questions;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +23,7 @@ import studio.roboto.hack24.localstorage.SharedPrefsManager;
  * Created by jordan on 18/03/17.
  */
 
-public class QuestionFragment extends Fragment {
+public class QuestionFragment extends Fragment implements OnQuestionAddedListener {
 
     public static final String TAG = "QUESTIONS";
 
@@ -36,7 +38,8 @@ public class QuestionFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
+            savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_questions, container, false);
 
         findViews(v);
@@ -62,7 +65,7 @@ public class QuestionFragment extends Fragment {
     private void findViews(View v) {
         mEnchVP = (EnchantedViewPager) v.findViewById(R.id.enchVP);
         mEnchVP.useScale();
-        mEnchVP.addOnPageChangeListener((HomeActivity)getActivity());
+        mEnchVP.addOnPageChangeListener((HomeActivity) getActivity());
     }
 
     private void initViews() {
@@ -81,4 +84,27 @@ public class QuestionFragment extends Fragment {
         mAdapter.stop();
         super.onDestroy();
     }
+
+    //region OnQuestionAddedListener
+    @Override
+    public void questionAdded(String questionId) {
+        // Do nothing
+    }
+
+    @Override
+    public void questionAddFailed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(false);
+        builder.setMessage(R.string.question_add_failed_message);
+        builder.setPositiveButton(R.string.dismiss, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    //endregion
 }

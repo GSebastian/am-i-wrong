@@ -3,6 +3,7 @@ package studio.roboto.hack24.questions;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -17,6 +18,7 @@ import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import studio.roboto.hack24.R;
 import studio.roboto.hack24.firebase.FirebaseConnector;
+import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
 public class NewQuestionFragment extends Fragment implements View.OnClickListener {
 
@@ -26,9 +28,12 @@ public class NewQuestionFragment extends Fragment implements View.OnClickListene
     private EditText mEtQuestionInput;
     private TextView mTvCurrentLength;
 
+    private OnQuestionAddedListener mOnQuestionAddedListener;
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
+            savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_new_question, null);
 
         getArgs(rootView);
@@ -47,7 +52,7 @@ public class NewQuestionFragment extends Fragment implements View.OnClickListene
 
     private void updateCharacterCounter(int currentCharNumber) {
         String charsRemainingUnformatted = getString(R.string.chars_remaining);
-        mTvCurrentLength.setText(String.format(charsRemainingUnformatted, currentCharNumber));
+        mTvCurrentLength.setText(String.format(charsRemainingUnformatted, currentCharNumber, MAX_CHARACTERS));
     }
 
     private void initViews() {
@@ -66,11 +71,14 @@ public class NewQuestionFragment extends Fragment implements View.OnClickListene
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 int currentLength = charSequence.length();
                 updateCharacterCounter(currentLength);
+
+                mBtnAsk.setEnabled(currentLength > 0);
             }
         });
 
-        mEtQuestionInput.setFilters(new InputFilter[] {new InputFilter.LengthFilter(MAX_CHARACTERS)});
+        mEtQuestionInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_CHARACTERS)});
         updateCharacterCounter(0);
+        mBtnAsk.setEnabled(false);
     }
 
     private boolean getArgs(View v) {
@@ -83,10 +91,46 @@ public class NewQuestionFragment extends Fragment implements View.OnClickListene
         return false;
     }
 
+    public void setOnQuestionAddedListener(OnQuestionAddedListener listener) {
+        mOnQuestionAddedListener = listener;
+    }
+
     @Override
     public void onClick(View view) {
         if (view == mBtnAsk) {
-            FirebaseConnector.addQuestion(mEtQuestionInput.getText().toString().trim());
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setCancelable(false);
+            builder.setView(R.layout.dialog_adding_message);
+
+            final AlertDialog progressDialog = builder.create();
+            progressDialog.show();
+
+            FirebaseConnector.addQuestion(
+                    mEtQuestionInput.getText().toString().trim(),
+                    new OnQuestionAddedListener() {
+                        @Override
+                        public void questionAdded(String questionId) {
+                            progressDialog.hide();
+
+                            SharedPrefsManager.sharedInstance.addMyQuestionId(questionId);
+
+                            mEtQuestionInput.setText(null);
+
+                            if (mOnQuestionAddedListener != null) {
+                                mOnQuestionAddedListener.questionAdded(questionId);
+                            }
+                        }
+
+                        @Override
+                        public void questionAddFailed() {
+                            progressDialog.hide();
+
+                            if (mOnQuestionAddedListener != null) {
+                                mOnQuestionAddedListener.questionAddFailed();
+                            }
+                        }
+                    });
         }
     }
 }

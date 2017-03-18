@@ -30,6 +30,8 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
 
     private DatabaseReference mQuestionRef;
 
+    private OnQuestionAddedListener mOnQuestionAddedListener;
+
     public QuestionFragmentPagerAdapter(FragmentManager manager, Context context) {
         super(manager);
         this.mContext = context;
@@ -50,6 +52,8 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
             Bundle bundle = new Bundle();
             bundle.putInt("KEY", position);
             newQuestionFragment.setArguments(bundle);
+
+            newQuestionFragment.setOnQuestionAddedListener(mOnQuestionAddedListener);
 
             return newQuestionFragment;
         } else {
@@ -72,6 +76,11 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
     public void stop() {
         mQuestionRef.removeEventListener(this);
     }
+
+	public void setOnQuestionAddedListener(OnQuestionAddedListener onQuestionAddedListener) {
+        this.mOnQuestionAddedListener = onQuestionAddedListener;
+    }
+
 
     public abstract boolean shouldAdd(Question question);
 
