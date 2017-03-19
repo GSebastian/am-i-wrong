@@ -10,30 +10,29 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import studio.roboto.hack24.firebase.models.Question;
 
-/**
- * Created by jordan on 18/03/17.
- */
-
 public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter implements ChildEventListener {
 
     private Context mContext;
     private List<Question> questions = new ArrayList<>();
+    private EnchantedViewPager mViewPager;
 
     private DatabaseReference mQuestionRef;
 
     private OnQuestionAddedListener mOnQuestionAddedListener;
 
-    public QuestionFragmentPagerAdapter(FragmentManager manager, Context context) {
+    public QuestionFragmentPagerAdapter(FragmentManager manager, Context context, EnchantedViewPager enchantedViewPager) {
         super(manager);
         this.mContext = context;
         this.mQuestionRef = getRef();
         this.mQuestionRef.addChildEventListener(this);
+        this.mViewPager = enchantedViewPager;
     }
 
     @Override
@@ -50,7 +49,28 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
             bundle.putInt("KEY", position);
             newQuestionFragment.setArguments(bundle);
 
-            newQuestionFragment.setOnQuestionAddedListener(mOnQuestionAddedListener);
+            newQuestionFragment.setOnQuestionAddedListener(new OnQuestionAddedListener() {
+                @Override
+                public void questionAdded(String questionId) {
+                    Integer position = null;
+                    for (int i = 0; i < questions.size(); i++) {
+                        Question question = questions.get(i);
+                        if (question.id.equals(questionId)) {
+                            position = i;
+                            break;
+                        }
+                    }
+                    if (position != null) {
+                        mViewPager.setCurrentItem(position + 1);
+                    }
+                    mOnQuestionAddedListener.questionAdded(questionId);
+                }
+
+                @Override
+                public void questionAddFailed() {
+                    mOnQuestionAddedListener.questionAddFailed();
+                }
+            });
 
             return newQuestionFragment;
         } else {

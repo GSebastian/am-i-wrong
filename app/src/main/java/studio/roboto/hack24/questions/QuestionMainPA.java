@@ -16,11 +16,8 @@ import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
 public class QuestionMainPA extends QuestionFragmentPagerAdapter {
 
-    private EnchantedViewPager pager;
-
-    public QuestionMainPA(FragmentManager manager, Context context, EnchantedViewPager pager) {
-        super(manager, context);
-        this.pager = pager;
+    public QuestionMainPA(FragmentManager manager, Context context, EnchantedViewPager enchantedViewPager) {
+        super(manager, context, enchantedViewPager);
     }
 
     @Override
@@ -30,9 +27,7 @@ public class QuestionMainPA extends QuestionFragmentPagerAdapter {
 
     @Override
     public void added(Question question) {
-//        if (SharedPrefsManager.sharedInstance.getMyQuestionIds().contains(question.id)) {
-//            pager.setCurrentItem(getCount() - 1);
-//        }
+
     }
 
     @Override

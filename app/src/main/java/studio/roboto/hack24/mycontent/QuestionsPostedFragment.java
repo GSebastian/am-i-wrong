@@ -12,7 +12,6 @@ import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 import studio.roboto.hack24.HomeActivity;
 import studio.roboto.hack24.R;
 import studio.roboto.hack24.questions.QuestionFragmentPagerAdapter;
-import studio.roboto.hack24.questions.QuestionMainPA;
 import studio.roboto.hack24.questions.QuestionMinePA;
 
 /**
@@ -44,7 +43,7 @@ public class QuestionsPostedFragment extends Fragment {
     }
 
     private void initViews() {
-        mAdapter = new QuestionMinePA(getFragmentManager(), getContext());
+        mAdapter = new QuestionMinePA(getFragmentManager(), getContext(), mEnchVP);
         mEnchVP.setAdapter(mAdapter);
     }
 

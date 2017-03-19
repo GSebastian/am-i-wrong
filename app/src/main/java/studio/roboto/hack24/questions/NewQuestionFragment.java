@@ -72,7 +72,7 @@ public class NewQuestionFragment extends Fragment implements View.OnClickListene
                 int currentLength = charSequence.length();
                 updateCharacterCounter(currentLength);
 
-                mBtnAsk.setEnabled(currentLength > 0);
+                mBtnAsk.setEnabled(charSequence.toString().trim().length() > 0);
             }
         });
 
