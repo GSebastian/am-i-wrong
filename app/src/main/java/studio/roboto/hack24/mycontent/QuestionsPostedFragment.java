@@ -11,6 +11,7 @@ import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import studio.roboto.hack24.HomeActivity;
 import studio.roboto.hack24.R;
+import studio.roboto.hack24.questions.QuestionElementDialogFragment;
 import studio.roboto.hack24.questions.QuestionFragmentPagerAdapter;
 import studio.roboto.hack24.questions.QuestionMinePA;
 
@@ -32,6 +33,19 @@ public class QuestionsPostedFragment extends Fragment {
 
         findViews(v);
         initViews();
+
+        QuestionElementDialogFragment dialogFragment = new QuestionElementDialogFragment();
+        Bundle bundle = new Bundle();
+
+        bundle.putString("QUESTION_ID", "-KfYXHQ0GmKL0k0FUaMn");
+        bundle.putString("QUESTION_TEXT", "TEST TEXT");
+        bundle.putLong("QUESTION_TIMESTAMP", 1489876102);
+        bundle.putLong("QUESTION_YES", 5);
+        bundle.putLong("QUESTION_NO", 5);
+
+        dialogFragment.setArguments(bundle);
+        dialogFragment.show(getFragmentManager(), "TEST-TAG");
+
 
         return v;
     }
