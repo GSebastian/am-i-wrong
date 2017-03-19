@@ -51,4 +51,15 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@android:drawable/sym_def_app_icon" />
 
+    <ImageButton
+        android:id="@+id/imgEditName"
+        android:background="@color/transparent"
+        android:padding="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

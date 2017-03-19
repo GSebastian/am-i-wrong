@@ -45,4 +45,11 @@
         <item>The Mental Goose</item>
         <item>The Lazy Toerag</item>
     </string-array>
+
+    <string-array name="example_question">
+        <item>I just walked out of a shop without paying</item>
+        <item>I just smuggled a llama from the city zoo. Was I right?</item>
+        <item>I didn\'t report an affair I just found out about. Should I make him tell her?</item>
+        <item>I\'m sick of taking care of my aging gradma, I feel like I don\'t have a life</item>
+    </string-array>
 </resources>

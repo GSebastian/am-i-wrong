@@ -63,7 +63,7 @@ public class NameDialog implements DialogInterface.OnShowListener {
                 if (!mEditText.getText().toString().trim().equals("")) {
                     SharedPrefsManager.sharedInstance.setCurrentName(mEditText.getText().toString().trim());
                     mCallback.nameConfirmed(mEditText.getText().toString().trim());
-                    mDialog.dismiss();
+                    mDialog.hide();
                 }
             }
         });

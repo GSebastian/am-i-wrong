@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import studio.roboto.hack24.firebase.models.Question;
+import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
 /**
  * Created by jordan on 18/03/17.
@@ -94,7 +96,7 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
             Question question = dataSnapshot.getValue(Question.class);
             question.id = dataSnapshot.getKey();
             if (shouldAdd(question)) {
-                questions.add(question);
+                questions.add(0, question);
                 notifyDataSetChanged();
                 added(question);
             }

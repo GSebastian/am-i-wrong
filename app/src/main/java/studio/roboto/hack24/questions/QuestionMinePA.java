@@ -30,7 +30,7 @@ public class QuestionMinePA extends QuestionFragmentPagerAdapter {
 
     @Override
     public boolean showNew() {
-        return false;
+        return true;
     }
 
     @Override

@@ -20,9 +20,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
 import studio.roboto.hack24.mycontent.QuestionsIveAnsweredFragment;
@@ -31,7 +36,7 @@ import studio.roboto.hack24.questions.NameDialog;
 import studio.roboto.hack24.questions.QuestionFragment;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, NameDialog.NameConfirmedCallback {
+        implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, NameDialog.NameConfirmedCallback, View.OnClickListener {
 
     private static final float STATUS_BAR_DARKEN_MULTIPLIER = 0.85f;
 
@@ -41,12 +46,15 @@ public class HomeActivity extends AppCompatActivity
     private ImageView mImgHeader;
     private TextView mTvName;
     private NameDialog mNameDialog;
+    private ImageButton mEditName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        mViewColourChanger = findViewById(R.id.viewColourChanger);
+        mViewColourChanger.setBackgroundColor(Color.LTGRAY);
         setupAndInitColourTransitioner();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -63,6 +71,8 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         mImgHeader = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imgHeader);
         mTvName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.name);
+        mEditName = (ImageButton) navigationView.getHeaderView(0).findViewById(R.id.imgEditName);
+        mEditName.setOnClickListener(this);
 
         showFragment(QuestionFragment.TAG);
         navigationView.getMenu().getItem(0).setChecked(true);
@@ -70,7 +80,7 @@ public class HomeActivity extends AppCompatActivity
         if (SharedPrefsManager.sharedInstance.isFirstOpen()) {
             mNameDialog = NameDialog.create(this);
             mNameDialog.getDialog(this).show();
-            // SharedPrefsManager.sharedInstance.firstOpen();
+            SharedPrefsManager.sharedInstance.firstOpen();
         }
     }
 
@@ -104,13 +114,15 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void setupAndInitColourTransitioner() {
-        mViewColourChanger = findViewById(R.id.viewColourChanger);
-        mViewColourChanger.setBackgroundColor(Color.LTGRAY);
-
         String[] values = getResources().getStringArray(R.array.colors);
+        List<Integer> mColours = new ArrayList<>();
         mColoursForTransitions = new int[values.length];
         for (int i = 0; i < values.length; i++) {
-            mColoursForTransitions[i] = Color.parseColor(values[i]);
+            mColours.add(Color.parseColor(values[i]));
+        }
+        Collections.shuffle(mColours);
+        for (int i = 0; i < values.length; i++) {
+            mColoursForTransitions[i] = mColours.get(i);
         }
         mColorTransitioner = new ArgbEvaluator();
     }
@@ -128,6 +140,8 @@ public class HomeActivity extends AppCompatActivity
             setTitle(R.string.questions_posted);
             showFragment(QuestionsPostedFragment.TAG, new QuestionsPostedFragment());
         }
+        setupAndInitColourTransitioner();
+
     }
 
     private void showFragment(String tag, Fragment fragment) {
@@ -186,4 +200,11 @@ public class HomeActivity extends AppCompatActivity
         mTvName.setText("Commenting as: " + name);
     }
     //endregion
+
+    @Override
+    public void onClick(View v) {
+        if (v == mEditName) {
+            mNameDialog.getDialog(this).show();
+        }
+    }
 }
