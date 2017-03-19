@@ -1,6 +1,7 @@
 package studio.roboto.hack24;
 
 import android.animation.ArgbEvaluator;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
@@ -44,6 +46,7 @@ public class HomeActivity extends AppCompatActivity
     private TextView mTvName;
     private NameDialog mNameDialog;
     private ImageButton mEditName;
+    private NavigationView mNavView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,16 +67,16 @@ public class HomeActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        mImgHeader = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imgHeader);
-        mTvName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.name);
-        mEditName = (ImageButton) navigationView.getHeaderView(0).findViewById(R.id.imgEditName);
+        mNavView = (NavigationView) findViewById(R.id.nav_view);
+        mNavView.setNavigationItemSelectedListener(this);
+        mImgHeader = (ImageView) mNavView.getHeaderView(0).findViewById(R.id.imgHeader);
+        mTvName = (TextView) mNavView.getHeaderView(0).findViewById(R.id.name);
+        mEditName = (ImageButton) mNavView.getHeaderView(0).findViewById(R.id.imgEditName);
         mEditName.setOnClickListener(this);
         mTvName.setText("Commenting as: " + SharedPrefsManager.sharedInstance.getCurrentName());
 
         showFragment(QuestionFragment.TAG);
-        navigationView.getMenu().getItem(0).setChecked(true);
+        mNavView.getMenu().getItem(0).setChecked(true);
 
         mNameDialog = NameDialog.create(this);
         if (SharedPrefsManager.sharedInstance.isFirstOpen()) {
@@ -115,10 +118,11 @@ public class HomeActivity extends AppCompatActivity
         String[] values = getResources().getStringArray(R.array.colors);
         List<Integer> mColours = new ArrayList<>();
         mColoursForTransitions = new int[values.length];
-        for (int i = 0; i < values.length; i++) {
+        for (int i = 0; i <  values.length; i++) {
             mColours.add(Color.parseColor(values[i]));
         }
         Collections.shuffle(mColours);
+
         for (int i = 0; i < values.length; i++) {
             mColoursForTransitions[i] = mColours.get(i);
         }
@@ -129,16 +133,24 @@ public class HomeActivity extends AppCompatActivity
         if (tag.equals(QuestionFragment.TAG)) {
             setTitle(R.string.app_name);
             showFragment(QuestionFragment.TAG, new QuestionFragment());
+            setupAndInitColourTransitioner();
         }
         if (tag.equals(QuestionAnswersFragment.TAG)) {
             setTitle(R.string.questions_ive_answered);
             showFragment(QuestionAnswersFragment.TAG, new QuestionAnswersFragment());
+            int colour = ContextCompat.getColor(this, R.color.yes_color);
+            mViewColourChanger.setBackgroundColor(colour);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                setStatusBarColour(darkenColour(colour));
+            }
+            mImgHeader.setBackgroundColor(colour);
+
         }
         if (tag.equals(QuestionsPostedFragment.TAG)) {
             setTitle(R.string.questions_posted);
             showFragment(QuestionsPostedFragment.TAG, new QuestionsPostedFragment());
+            setupAndInitColourTransitioner();
         }
-        setupAndInitColourTransitioner();
 
     }
 
@@ -178,12 +190,29 @@ public class HomeActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setStatusBarColour(colour);
         }
+
+        int colPosFrom = position % mColoursForTransitions.length;
+        int colPosTo = (position + 1) % mColoursForTransitions.length;
+        if (mColoursForTransitions[colPosFrom] == Color.BLACK) {
+            colour = (Integer) mColorTransitioner.evaluate(
+                    positionOffset,
+                    Color.WHITE,
+                    mColoursForTransitions[colPosTo]
+            );
+        }
+        if (mColoursForTransitions[colPosTo] == Color.BLACK) {
+            colour = (Integer) mColorTransitioner.evaluate(
+                    positionOffset,
+                    mColoursForTransitions[colPosFrom],
+                    Color.WHITE
+            );
+        }
+        mImgHeader.setBackgroundColor(colour);
         Utils.hideKeyboard(this, mViewColourChanger);
     }
 
     @Override
     public void onPageSelected(int position) {
-
     }
 
     @Override

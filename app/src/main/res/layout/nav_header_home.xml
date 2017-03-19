@@ -45,9 +45,8 @@
         android:layout_marginStart="8dp"
         android:layout_above="@id/title"
         android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@mipmap/ic_launcher" />
 
     <ImageButton
