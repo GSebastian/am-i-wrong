@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
+import java.util.Random;
+
 import studio.roboto.hack24.R;
 import studio.roboto.hack24.firebase.FirebaseConnector;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
@@ -79,6 +81,12 @@ public class NewQuestionFragment extends Fragment implements View.OnClickListene
         mEtQuestionInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_CHARACTERS)});
         updateCharacterCounter(0);
         mBtnAsk.setEnabled(false);
+
+        String[] hints = getResources().getStringArray(R.array.example_question);
+
+        Random random = new Random();
+        int index = random.nextInt(hints.length);
+        mEtQuestionInput.setHint(hints[index]);
     }
 
     private boolean getArgs(View v) {

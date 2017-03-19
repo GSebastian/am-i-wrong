@@ -40,6 +40,7 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:background="@color/white"
                 android:gravity="center_horizontal"
+                android:textColorHint="#ddd"
                 android:hint="@string/new_question_hint"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
