@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.view.ViewGroup;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import studio.roboto.hack24.firebase.models.Question;
-import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
 public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter implements ChildEventListener {
 
@@ -99,7 +97,6 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
 	public void setOnQuestionAddedListener(OnQuestionAddedListener onQuestionAddedListener) {
         this.mOnQuestionAddedListener = onQuestionAddedListener;
     }
-
 
     public abstract boolean shouldAdd(Question question);
 
