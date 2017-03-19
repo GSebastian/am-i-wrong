@@ -9,14 +9,12 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import studio.roboto.hack24.R;
 import studio.roboto.hack24.firebase.FirebaseConnector;
-import studio.roboto.hack24.firebase.FirebaseManager;
 import studio.roboto.hack24.firebase.models.Question;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
@@ -28,6 +26,8 @@ public class QuestionsIPostedRVAdapter extends RecyclerView.Adapter<MyQuestionVi
 
     private List<Question> mQuestions;
     private DatabaseReference mDbRef;
+
+    private QuestionsPostedFragment.OnQuestionClickListener mListener;
 
     public QuestionsIPostedRVAdapter() {
         mQuestions = new ArrayList<>();
@@ -46,7 +46,7 @@ public class QuestionsIPostedRVAdapter extends RecyclerView.Adapter<MyQuestionVi
     @Override
     public MyQuestionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_questions_asked, parent, false);
-        return new MyQuestionViewHolder(v);
+        return new MyQuestionViewHolder(v, mListener);
     }
 
     @Override
@@ -66,6 +66,11 @@ public class QuestionsIPostedRVAdapter extends RecyclerView.Adapter<MyQuestionVi
             }
         }
         return -1;
+    }
+
+
+    public void setOnQuestionClickListener(QuestionsPostedFragment.OnQuestionClickListener listener) {
+        this.mListener = listener;
     }
 
     //region ValueChange Listener

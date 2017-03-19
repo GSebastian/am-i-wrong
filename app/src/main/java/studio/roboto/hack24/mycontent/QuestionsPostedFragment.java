@@ -9,12 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
-
-import studio.roboto.hack24.HomeActivity;
 import studio.roboto.hack24.R;
+import studio.roboto.hack24.firebase.models.Question;
 import studio.roboto.hack24.questions.QuestionElementDialogFragment;
-import studio.roboto.hack24.questions.QuestionFragmentPagerAdapter;
 
 /**
  * Created by jordan on 18/03/17.
@@ -35,19 +32,6 @@ public class QuestionsPostedFragment extends Fragment {
         findViews(v);
         initViews();
 
-        QuestionElementDialogFragment dialogFragment = new QuestionElementDialogFragment();
-        Bundle bundle = new Bundle();
-
-        bundle.putString("QUESTION_ID", "-KfYXHQ0GmKL0k0FUaMn");
-        bundle.putString("QUESTION_TEXT", "TEST TEXT");
-        bundle.putLong("QUESTION_TIMESTAMP", 1489876102);
-        bundle.putLong("QUESTION_YES", 5);
-        bundle.putLong("QUESTION_NO", 5);
-
-        dialogFragment.setArguments(bundle);
-        dialogFragment.show(getFragmentManager(), "TEST-TAG");
-
-
         return v;
     }
 
@@ -57,6 +41,22 @@ public class QuestionsPostedFragment extends Fragment {
 
     private void initViews() {
         mAdapter = new QuestionsIPostedRVAdapter();
+        mAdapter.setOnQuestionClickListener(new OnQuestionClickListener() {
+            @Override
+            public void clickedQuestion(Question question) {
+                QuestionElementDialogFragment dialogFragment = new QuestionElementDialogFragment();
+                Bundle bundle = new Bundle();
+
+                bundle.putString("QUESTION_ID", question.id);
+                bundle.putString("QUESTION_TEXT", question.text);
+                bundle.putLong("QUESTION_TIMESTAMP", question.timestamp);
+                bundle.putLong("QUESTION_YES", question.yes);
+                bundle.putLong("QUESTION_NO", question.no);
+
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(getFragmentManager(), "TEST-TAG");
+            }
+        });
         mRlMain.setLayoutManager(new LinearLayoutManager(getContext()));
         mRlMain.setAdapter(mAdapter);
     }
@@ -65,6 +65,10 @@ public class QuestionsPostedFragment extends Fragment {
     public void onDestroy() {
         mAdapter.stop();
         super.onDestroy();
+    }
+
+    public interface OnQuestionClickListener {
+        void clickedQuestion(Question question);
     }
 
 }

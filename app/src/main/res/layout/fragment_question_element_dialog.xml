@@ -1,93 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <RelativeLayout
+        android:elevation="4dp"
         android:id="@+id/rlMain"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_below="@id/commentView"
         android:background="@color/white"
-        android:elevation="4dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tvQuestionTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="12dp"
+            android:paddingTop="72dp"
             android:paddingLeft="32dp"
             android:paddingRight="32dp"
-            android:paddingTop="72dp"
-            android:textSize="22sp"/>
+            android:paddingBottom="12dp"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:id="@+id/tvQuestionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvMain"
+            android:layout_above="@+id/etBackground"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/etBackground">
+            android:layout_height="match_parent">
+
 
         </android.support.v7.widget.RecyclerView>
 
         <ImageView
-            android:id="@+id/etBackground"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignTop="@+id/etContent"
             android:alpha="0.0"
-            android:background="@color/lightgray"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:id="@+id/etBackground"
+            android:background="@color/lightergray"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_alignTop="@+id/etContent"
+            android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/tvSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/etContent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:alpha="0.0"
-            android:background="@color/transparent"
-            android:elevation="0dp"
             android:enabled="false"
             android:foreground="?attr/selectableItemBackground"
+            android:alpha="0.0"
+            android:elevation="0dp"
+            android:visibility="gone"
+            android:paddingBottom="8dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:padding="8dp"
+            android:background="@color/transparent"
+            android:id="@+id/tvSend"
             android:text="@string/send"
-            android:visibility="gone"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/etContent" />
 
         <EditText
-            android:id="@+id/etContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="8dp"
+            android:alpha="0.0"
+            android:visibility="gone"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_toLeftOf="@id/tvSend"
             android:layout_toStartOf="@id/tvSend"
-            android:alpha="0.0"
-            android:background="@color/lightgray"
-            android:hint="@string/comment"
+            android:background="@color/lightergray"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:maxLines="4"
-            android:padding="8dp"
-            android:visibility="gone"/>
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:hint="@string/comment"
+            android:layout_height="wrap_content"
+            android:id="@+id/etContent" />
 
         <ImageView
-            android:id="@+id/etDivider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="8dp"
+            android:alpha="0.0"
+            android:visibility="gone"
+            android:src="@color/colorPrimary"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:alpha="0.0"
-            android:src="@color/colorPrimary"
-            android:visibility="gone"/>
+            android:id="@+id/etDivider"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="16dp"/>
 
     </RelativeLayout>
 

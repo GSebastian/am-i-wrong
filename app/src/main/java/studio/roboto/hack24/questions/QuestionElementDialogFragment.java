@@ -25,7 +25,7 @@ import studio.roboto.hack24.questions.viewholder.YesNoCallback;
 public class QuestionElementDialogFragment extends DialogFragment implements YesNoCallback, View.OnClickListener,
         TextWatcher {
 
-//    private int mPosition;
+    //    private int mPosition;
     private int totalScroll = 0;
     private Question mQuestion;
     private boolean isUnlocked = false;
@@ -44,8 +44,7 @@ public class QuestionElementDialogFragment extends DialogFragment implements Yes
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setStyle(DialogFragment.STYLE_NO_TITLE,
-                android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth);
+        setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth);
     }
 
     @Nullable

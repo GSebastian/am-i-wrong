@@ -11,20 +11,29 @@ import studio.roboto.hack24.firebase.models.Question;
  * Created by jordan on 19/03/17.
  */
 
-public class MyQuestionViewHolder extends RecyclerView.ViewHolder {
+public class MyQuestionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private TextView mTvTitle;
     private TextView mTvNo;
     private TextView mTvYes;
 
-    public MyQuestionViewHolder(View itemView) {
+    private Question question;
+    private QuestionsPostedFragment.OnQuestionClickListener mListener;
+
+    public MyQuestionViewHolder(View itemView, QuestionsPostedFragment.OnQuestionClickListener listener) {
         super(itemView);
         mTvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
         mTvNo = (TextView) itemView.findViewById(R.id.tvNo);
         mTvYes = (TextView) itemView.findViewById(R.id.tvYes);
+
+        mListener = listener;
+
+        itemView.setOnClickListener(this);
     }
 
     public void bind(Question question) {
+        this.question = question;
+
         mTvTitle.setText(question.text);
         int total = (int) (question.yes + question.no);
         if (total != 0) {
@@ -34,5 +43,10 @@ public class MyQuestionViewHolder extends RecyclerView.ViewHolder {
             mTvNo.setText("0%");
             mTvYes.setText("0%");
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        mListener.clickedQuestion(question);
     }
 }
