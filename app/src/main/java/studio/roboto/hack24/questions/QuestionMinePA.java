@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
 import com.google.firebase.database.DatabaseReference;
+import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import studio.roboto.hack24.firebase.FirebaseConnector;
 import studio.roboto.hack24.firebase.models.Question;
@@ -14,8 +15,8 @@ import studio.roboto.hack24.localstorage.SharedPrefsManager;
  */
 
 public class QuestionMinePA extends QuestionFragmentPagerAdapter {
-    public QuestionMinePA(FragmentManager manager, Context context) {
-        super(manager, context);
+    public QuestionMinePA(FragmentManager manager, Context context, EnchantedViewPager enchantedViewPager) {
+        super(manager, context, enchantedViewPager);
     }
 
     @Override

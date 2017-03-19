@@ -13,7 +13,6 @@ import studio.roboto.hack24.HomeActivity;
 import studio.roboto.hack24.R;
 import studio.roboto.hack24.questions.QuestionAnswersPA;
 import studio.roboto.hack24.questions.QuestionFragmentPagerAdapter;
-import studio.roboto.hack24.questions.QuestionMainPA;
 
 /**
  * Created by jordan on 18/03/17.
@@ -44,7 +43,7 @@ public class QuestionsIveAnsweredFragment extends Fragment {
     }
 
     private void initViews() {
-        mAdapter = new QuestionAnswersPA(getFragmentManager(), getContext());
+        mAdapter = new QuestionAnswersPA(getFragmentManager(), getContext(), mEnchVP);
         mEnchVP.setAdapter(mAdapter);
     }
 
