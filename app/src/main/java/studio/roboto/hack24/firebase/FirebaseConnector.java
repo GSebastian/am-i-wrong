@@ -110,7 +110,7 @@ public class FirebaseConnector {
         tasksNode.child(newTaskKey).setValue(voteTask.toMap());
     }
 
-    private static DatabaseReference getRemoteNames() {
+    public static DatabaseReference getRemoteNames() {
         return FirebaseManager.sharedInstance.databaseRef.child("Names");
     }
 }

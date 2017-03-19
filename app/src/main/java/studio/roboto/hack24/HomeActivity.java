@@ -77,8 +77,8 @@ public class HomeActivity extends AppCompatActivity
         showFragment(QuestionFragment.TAG);
         navigationView.getMenu().getItem(0).setChecked(true);
 
+        mNameDialog = NameDialog.create(this);
         if (SharedPrefsManager.sharedInstance.isFirstOpen()) {
-            mNameDialog = NameDialog.create(this);
             mNameDialog.getDialog(this).show();
             SharedPrefsManager.sharedInstance.firstOpen();
         }

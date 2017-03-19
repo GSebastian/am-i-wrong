@@ -10,22 +10,50 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.Random;
 
 import studio.roboto.hack24.R;
+import studio.roboto.hack24.firebase.FirebaseConnector;
+import studio.roboto.hack24.firebase.FirebaseManager;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
 /**
  * Created by jordan on 18/03/17.
  */
 
-public class NameDialog implements DialogInterface.OnShowListener {
+public class NameDialog implements DialogInterface.OnShowListener, ValueEventListener {
 
     private Context mContext;
 
     private EditText mEditText;
     private AlertDialog mDialog;
     private NameConfirmedCallback mCallback;
+    private DatabaseReference mNameRef;
+    private String[] names;
+
+    //region ValueEvent Listeners
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        if (dataSnapshot != null && dataSnapshot.getValue() != null) {
+            names = new String[(int)dataSnapshot.getChildrenCount()];
+            int i = 0;
+            for (DataSnapshot s : dataSnapshot.getChildren()) {
+                names[i] = s.getKey();
+                i++;
+            }
+        }
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
+    }
+    //endregion
 
     public interface NameConfirmedCallback {
         void nameConfirmed(String name);
@@ -35,6 +63,11 @@ public class NameDialog implements DialogInterface.OnShowListener {
         NameDialog dialog = new NameDialog();
         dialog.mContext = context;
         return dialog;
+    }
+
+    public NameDialog() {
+        mNameRef = FirebaseConnector.getRemoteNames();
+        mNameRef.addListenerForSingleValueEvent(this);
     }
 
     public AlertDialog getDialog(NameConfirmedCallback callback) {
@@ -71,10 +104,11 @@ public class NameDialog implements DialogInterface.OnShowListener {
         random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String[] string = mContext.getResources().getStringArray(R.array.names);
-                Random r = new Random();
-                int randomIndex = r.nextInt(string.length);
-                mEditText.setText(string[randomIndex]);
+                if (names != null) {
+                    Random r = new Random();
+                    int randomIndex = r.nextInt(names.length);
+                    mEditText.setText(names[randomIndex]);
+                }
             }
         });
         Button anonymous = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEGATIVE);
