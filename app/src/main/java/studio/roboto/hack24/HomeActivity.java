@@ -8,9 +8,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,7 +20,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,8 +27,8 @@ import java.util.Collections;
 import java.util.List;
 
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
-import studio.roboto.hack24.mycontent.QuestionsIveAnsweredFragment;
 import studio.roboto.hack24.mycontent.QuestionsPostedFragment;
+import studio.roboto.hack24.mycontent.QuestionAnswersFragment;
 import studio.roboto.hack24.questions.NameDialog;
 import studio.roboto.hack24.questions.QuestionFragment;
 
@@ -105,7 +102,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_myquestions) {
             showFragment(QuestionsPostedFragment.TAG);
         } else if (id == R.id.nav_comments) {
-            showFragment(QuestionsIveAnsweredFragment.TAG);
+            showFragment(QuestionAnswersFragment.TAG);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -132,9 +129,9 @@ public class HomeActivity extends AppCompatActivity
             setTitle(R.string.app_name);
             showFragment(QuestionFragment.TAG, new QuestionFragment());
         }
-        if (tag.equals(QuestionsIveAnsweredFragment.TAG)) {
+        if (tag.equals(QuestionAnswersFragment.TAG)) {
             setTitle(R.string.questions_ive_answered);
-            showFragment(QuestionsIveAnsweredFragment.TAG, new QuestionsIveAnsweredFragment());
+            showFragment(QuestionAnswersFragment.TAG, new QuestionAnswersFragment());
         }
         if (tag.equals(QuestionsPostedFragment.TAG)) {
             setTitle(R.string.questions_posted);

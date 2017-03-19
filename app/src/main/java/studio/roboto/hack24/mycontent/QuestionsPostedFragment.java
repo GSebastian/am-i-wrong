@@ -3,6 +3,8 @@ package studio.roboto.hack24.mycontent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +13,8 @@ import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import studio.roboto.hack24.HomeActivity;
 import studio.roboto.hack24.R;
+import studio.roboto.hack24.questions.QuestionAnswersPA;
 import studio.roboto.hack24.questions.QuestionFragmentPagerAdapter;
-import studio.roboto.hack24.questions.QuestionMinePA;
 
 /**
  * Created by jordan on 18/03/17.
@@ -22,13 +24,13 @@ public class QuestionsPostedFragment extends Fragment {
 
     public static final String TAG = "QUESTIONS_POSTED";
 
-    private EnchantedViewPager mEnchVP;
-    private QuestionFragmentPagerAdapter mAdapter;
+    private RecyclerView mRlMain;
+    private QuestionsIPostedRVAdapter mAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_questions, container, false);
+        View v = inflater.inflate(R.layout.fragment_questions_me, container, false);
 
         findViews(v);
         initViews();
@@ -37,14 +39,13 @@ public class QuestionsPostedFragment extends Fragment {
     }
 
     private void findViews(View v) {
-        mEnchVP = (EnchantedViewPager) v.findViewById(R.id.enchVP);
-        mEnchVP.useScale();
-        mEnchVP.addOnPageChangeListener((HomeActivity)getActivity());
+        mRlMain = (RecyclerView) v.findViewById(R.id.rlMain);
     }
 
     private void initViews() {
-        mAdapter = new QuestionMinePA(getFragmentManager(), getContext(), mEnchVP);
-        mEnchVP.setAdapter(mAdapter);
+        mAdapter = new QuestionsIPostedRVAdapter();
+        mRlMain.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRlMain.setAdapter(mAdapter);
     }
 
     @Override
@@ -52,4 +53,5 @@ public class QuestionsPostedFragment extends Fragment {
         mAdapter.stop();
         super.onDestroy();
     }
+
 }

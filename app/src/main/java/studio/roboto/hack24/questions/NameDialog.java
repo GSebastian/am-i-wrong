@@ -73,15 +73,16 @@ public class NameDialog implements DialogInterface.OnShowListener, ValueEventLis
     public AlertDialog getDialog(NameConfirmedCallback callback) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_enter_name, null);
         mEditText = (EditText) view.findViewById(R.id.etName);
+        mEditText.setText(SharedPrefsManager.sharedInstance.getCurrentName());
         mDialog = new AlertDialog.Builder(mContext)
                 .setView(view)
                 .setTitle(R.string.enter_name)
                 .setPositiveButton(R.string.go, null)
                 .setNeutralButton(R.string.random, null)
                 .setNegativeButton(R.string.anonymous, null)
-                .setCancelable(false)
                 .create();
         mDialog.setOnShowListener(this);
+        mDialog.setCancelable(false);
         mDialog.setCanceledOnTouchOutside(false);
         mCallback = callback;
         return mDialog;

@@ -13,12 +13,13 @@ import studio.roboto.hack24.HomeActivity;
 import studio.roboto.hack24.R;
 import studio.roboto.hack24.questions.QuestionAnswersPA;
 import studio.roboto.hack24.questions.QuestionFragmentPagerAdapter;
+import studio.roboto.hack24.questions.QuestionMinePA;
 
 /**
  * Created by jordan on 18/03/17.
  */
 
-public class QuestionsIveAnsweredFragment extends Fragment {
+public class QuestionAnswersFragment extends Fragment {
 
     public static final String TAG = "QUESTIONS_ANSWERED";
 
@@ -52,5 +53,4 @@ public class QuestionsIveAnsweredFragment extends Fragment {
         mAdapter.stop();
         super.onDestroy();
     }
-
 }

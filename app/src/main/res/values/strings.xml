@@ -28,13 +28,14 @@
     <string name="go">Go!</string>
 
     <string-array name="colors">
-        <item>#0097A7</item>
-        <item>#d32f2f</item>
-        <item>#388E3C</item>
-        <item>#7B1FA2</item>
-        <item>#E64A19</item>
-        <item>#616161</item>
-        <item>#C2185B</item>
+        <item>#50E3C2</item>
+        <item>#F89EF3</item>
+        <item>#000000</item>
+        <!--<item>#388E3C</item>-->
+        <!--<item>#7B1FA2</item>-->
+        <!--<item>#E64A19</item>-->
+        <!--<item>#616161</item>-->
+        <!--<item>#C2185B</item>-->
     </string-array>
 
     <string-array name="names">

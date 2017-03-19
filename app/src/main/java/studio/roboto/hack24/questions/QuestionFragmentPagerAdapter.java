@@ -41,6 +41,11 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
     }
 
     @Override
+    public int getItemPosition(Object object) {
+        return POSITION_UNCHANGED;
+    }
+
+    @Override
     public Fragment getItem(int position) {
         if (position == 0 && showNew()) {
             NewQuestionFragment newQuestionFragment = new NewQuestionFragment();

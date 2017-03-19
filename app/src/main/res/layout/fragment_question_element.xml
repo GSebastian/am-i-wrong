@@ -42,7 +42,7 @@
             android:alpha="0.0"
             android:visibility="gone"
             android:id="@+id/etBackground"
-            android:background="@color/lightgray"
+            android:background="@color/lightergray"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_alignTop="@+id/etContent"
@@ -54,10 +54,11 @@
             android:alpha="0.0"
             android:elevation="0dp"
             android:visibility="gone"
+            android:paddingBottom="8dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:padding="8dp"
@@ -71,13 +72,17 @@
         <EditText
             android:alpha="0.0"
             android:visibility="gone"
-            android:layout_marginBottom="8dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_toLeftOf="@id/tvSend"
             android:layout_toStartOf="@id/tvSend"
-            android:background="@color/lightgray"
-            android:padding="8dp"
+            android:background="@color/lightergray"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:maxLines="4"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
@@ -95,7 +100,7 @@
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="16dp"/>
 
     </RelativeLayout>
     
