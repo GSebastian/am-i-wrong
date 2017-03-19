@@ -41,11 +41,6 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
     }
 
     @Override
-    public int getItemPosition(Object object) {
-        return POSITION_UNCHANGED;
-    }
-
-    @Override
     public Fragment getItem(int position) {
         if (position == 0 && showNew()) {
             NewQuestionFragment newQuestionFragment = new NewQuestionFragment();
@@ -118,7 +113,7 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
             Question question = dataSnapshot.getValue(Question.class);
             question.id = dataSnapshot.getKey();
             if (shouldAdd(question)) {
-                questions.add(0, question);
+                questions.add(question);
                 notifyDataSetChanged();
                 added(question);
             }

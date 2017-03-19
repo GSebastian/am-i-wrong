@@ -94,8 +94,8 @@ public class QuestionsIPostedRVAdapter extends RecyclerView.Adapter<MyQuestionVi
             int pos = isContainedInList(dataSnapshot.getKey());
             if (pos != -1) {
                 Question q = dataSnapshot.getValue(Question.class);
-                q.id = mQuestions.get(pos).id;
-                mQuestions.set(pos, q);
+                mQuestions.get(pos).yes = q.yes;
+                mQuestions.get(pos).no = q.no;
                 notifyItemChanged(pos);
             }
         }

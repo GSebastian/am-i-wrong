@@ -11,7 +11,7 @@
     <ImageView
         android:scaleType="centerCrop"
         android:id="@+id/imgHeader"
-        android:src="@drawable/just_try_it"
+        android:src="@drawable/artboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -20,8 +20,8 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:paddingStart="8dp"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
         android:paddingRight="8dp"
         android:paddingEnd="8dp"
         android:textSize="14sp"
@@ -34,8 +34,8 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:paddingStart="8dp"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
         android:paddingRight="8dp"
         android:paddingEnd="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />

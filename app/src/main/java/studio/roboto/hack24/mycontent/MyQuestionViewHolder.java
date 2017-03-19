@@ -37,8 +37,8 @@ public class MyQuestionViewHolder extends RecyclerView.ViewHolder implements Vie
         mTvTitle.setText(question.text);
         int total = (int) (question.yes + question.no);
         if (total != 0) {
-            mTvNo.setText((int) ((question.no * 100) / total) + "%");
-            mTvYes.setText((int) ((question.yes * 100) / total) + "%");
+            mTvNo.setText((int) ((question.no * 100F) / total) + "%");
+            mTvYes.setText((int) ((question.yes * 100F) / total) + "%");
         } else {
             mTvNo.setText("0%");
             mTvYes.setText("0%");

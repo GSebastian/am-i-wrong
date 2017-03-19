@@ -40,15 +40,15 @@
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:id="@+id/tvYes"
+            android:id="@+id/tvNo"
             android:layout_below="@id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <ImageView
             android:layout_marginTop="8dp"
-            android:layout_toEndOf="@id/tvYes"
-            android:layout_toRightOf="@id/tvYes"
+            android:layout_toEndOf="@id/tvNo"
+            android:layout_toRightOf="@id/tvNo"
             android:textStyle="bold"
             android:text="100%"
             android:layout_marginLeft="16dp"
@@ -58,7 +58,7 @@
             android:layout_width="1dp"
             android:src="@color/dividerGray"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/tvYes"/>
+            android:layout_alignBottom="@id/tvNo"/>
 
         <TextView
             android:layout_marginTop="8dp"
@@ -69,7 +69,7 @@
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:id="@+id/tvNo"
+            android:id="@+id/tvYes"
             android:layout_toEndOf="@id/divider"
             android:layout_toRightOf="@id/divider"
             android:layout_below="@id/tvTitle"

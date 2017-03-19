@@ -70,6 +70,7 @@ public class HomeActivity extends AppCompatActivity
         mTvName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.name);
         mEditName = (ImageButton) navigationView.getHeaderView(0).findViewById(R.id.imgEditName);
         mEditName.setOnClickListener(this);
+        mTvName.setText("Commenting as: " + SharedPrefsManager.sharedInstance.getCurrentName());
 
         showFragment(QuestionFragment.TAG);
         navigationView.getMenu().getItem(0).setChecked(true);
