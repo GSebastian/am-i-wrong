@@ -48,7 +48,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@drawable/ic_launcher" />
+        android:src="@mipmap/ic_launcher" />
 
     <ImageButton
         android:id="@+id/imgEditName"
