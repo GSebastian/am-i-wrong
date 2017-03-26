@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,4 +12,27 @@
 
     </android.support.v7.widget.RecyclerView>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rlNoQuestions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:id="@+id/imgMain"
+            android:src="@drawable/error"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+        <TextView
+            android:textColor="@color/white"
+            android:padding="16dp"
+            android:text="@string/no_questions"
+            android:gravity="center"
+            android:layout_below="@id/imgMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

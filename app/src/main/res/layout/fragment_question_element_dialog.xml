@@ -73,6 +73,7 @@
             android:layout_marginStart="16dp"
             android:layout_toLeftOf="@id/tvSend"
             android:layout_toStartOf="@id/tvSend"
+            android:inputType="textCapSentences"
             android:background="@color/lightergray"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"

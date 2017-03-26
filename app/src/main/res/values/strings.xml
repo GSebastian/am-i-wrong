@@ -28,6 +28,8 @@
     <string name="go">Go!</string>
     <string name="tutorial_1">Post your questions you need that extra perspective on right here</string>
     <string name="tutorial_2">Then post it to the community and see what the rest of the world says</string>
+    <string name="search">Search</string>
+    <string name="no_questions">You haven\'t posted\nany questions yet</string>
 
     <string-array name="colors">
         <item>#50E3C2</item>
@@ -53,6 +55,7 @@
         <item>I just walked out of a shop without paying. Am I Wrong?</item>
         <item>I just smuggled a llama from the city zoo. Was I right?</item>
         <item>I took out the TV while playing Wrestling, and I am trying to hide it from my family, am I Wrong?</item>
-        <item>I\'m sick of taking care of my aging gradma, am I wrong for thinking that?</item>
+        <item>I\'m sick of taking care of my aging grandma, am I wrong for thinking that?</item>
+        <item>I just farted and blamed a kid.</item>
     </string-array>
 </resources>

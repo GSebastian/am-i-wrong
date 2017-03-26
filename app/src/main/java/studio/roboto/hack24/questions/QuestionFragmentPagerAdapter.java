@@ -74,11 +74,10 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
 
             return newQuestionFragment;
         } else {
-            position -= (showNew() ? 1 : 0);
-
             QuestionElementFragment frag = new QuestionElementFragment();
             Bundle b = new Bundle();
-            b.putInt("KEY", position + (showNew() ? 1 : 0));
+            b.putInt("KEY", position);
+            position -= (showNew() ? 1 : 0);
             b.putString("QUESTION_ID", questions.get(position).id);
             b.putString("QUESTION_TEXT", questions.get(position).text);
             b.putLong("QUESTION_TIMESTAMP", questions.get(position).timestamp);
@@ -88,6 +87,10 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
 
             return frag;
         }
+    }
+
+    public boolean reverseOrder() {
+        return false;
     }
 
     public void stop() {
@@ -113,7 +116,11 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
             Question question = dataSnapshot.getValue(Question.class);
             question.id = dataSnapshot.getKey();
             if (shouldAdd(question)) {
-                questions.add(question);
+                if (reverseOrder()) {
+                    questions.add(0, question);
+                } else {
+                    questions.add(question);
+                }
                 notifyDataSetChanged();
                 added(question);
             }

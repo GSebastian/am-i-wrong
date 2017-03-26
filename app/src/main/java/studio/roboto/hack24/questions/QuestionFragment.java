@@ -49,6 +49,7 @@ public class QuestionFragment extends Fragment implements OnQuestionAddedListene
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.home, menu);
+        menu.findItem(R.id.action_add).setVisible(mEnchVP.getCurrentItem() != 0);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

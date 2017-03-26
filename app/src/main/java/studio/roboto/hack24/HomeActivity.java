@@ -213,6 +213,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onPageSelected(int position) {
+        supportInvalidateOptionsMenu();
     }
 
     @Override

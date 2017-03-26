@@ -11,26 +11,37 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import studio.roboto.hack24.R;
 import studio.roboto.hack24.firebase.FirebaseConnector;
 import studio.roboto.hack24.firebase.models.Question;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
+import studio.roboto.hack24.utils.SortedListAdapter;
 
 /**
  * Created by jordan on 19/03/17.
  */
 
-public class QuestionsIPostedRVAdapter extends RecyclerView.Adapter<MyQuestionViewHolder> implements ChildEventListener {
+public class QuestionsIPostedRVAdapter extends SortedListAdapter<Question, MyQuestionViewHolder> implements ChildEventListener, SortedListAdapter.iCompare<Question> {
 
-    private List<Question> mQuestions;
     private DatabaseReference mDbRef;
 
+    private List<Question> mQuestions;
     private QuestionsPostedFragment.OnQuestionClickListener mListener;
+    private ChangeNotifier mNotifier;
 
-    public QuestionsIPostedRVAdapter() {
+    public QuestionsIPostedRVAdapter(ChangeNotifier notifier) {
+        super(Question.class, new Comparator<Question>() {
+            @Override
+            public int compare(Question o1, Question o2) {
+                return (int) ((o1.timestamp / 1000L) - (o2.timestamp / 1000L));
+            }
+        });
+        this.mNotifier = notifier;
         mQuestions = new ArrayList<>();
+        setEqualComparers(this);
         setupQuestionListener();
     }
 
@@ -43,6 +54,10 @@ public class QuestionsIPostedRVAdapter extends RecyclerView.Adapter<MyQuestionVi
         mDbRef.removeEventListener(this);
     }
 
+    public List<Question> getQuestions() {
+        return mQuestions;
+    }
+
     @Override
     public MyQuestionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_questions_asked, parent, false);
@@ -50,24 +65,18 @@ public class QuestionsIPostedRVAdapter extends RecyclerView.Adapter<MyQuestionVi
     }
 
     @Override
-    public void onBindViewHolder(MyQuestionViewHolder holder, int position) {
-        holder.bind(mQuestions.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return mQuestions.size();
+    public void onBindViewHolderWithItem(MyQuestionViewHolder holder, int position, Question item) {
+        holder.bind(item);
     }
 
     private int isContainedInList(String key) {
-        for (int i = 0; i < mQuestions.size(); i++) {
-            if (mQuestions.get(i).id.equals(key)) {
+        for (int i = 0; i < getItemCount(); i++) {
+            if (get(i).id.equals(key)) {
                 return i;
             }
         }
         return -1;
     }
-
 
     public void setOnQuestionClickListener(QuestionsPostedFragment.OnQuestionClickListener listener) {
         this.mListener = listener;
@@ -81,8 +90,9 @@ public class QuestionsIPostedRVAdapter extends RecyclerView.Adapter<MyQuestionVi
                 Question q = dataSnapshot.getValue(Question.class);
                 q.id = dataSnapshot.getKey();
                 if (SharedPrefsManager.sharedInstance.getMyQuestionIds().contains(q.id)) {
-                    mQuestions.add(0, q);
-                    notifyItemInserted(0);
+                    add(q);
+                    mQuestions.add(q);
+                    mNotifier.countChanged(mQuestions.size());
                 }
             }
         }
@@ -94,6 +104,8 @@ public class QuestionsIPostedRVAdapter extends RecyclerView.Adapter<MyQuestionVi
             int pos = isContainedInList(dataSnapshot.getKey());
             if (pos != -1) {
                 Question q = dataSnapshot.getValue(Question.class);
+                get(pos).yes = q.yes;
+                get(pos).no = q.no;
                 mQuestions.get(pos).yes = q.yes;
                 mQuestions.get(pos).no = q.no;
                 notifyItemChanged(pos);
@@ -103,7 +115,14 @@ public class QuestionsIPostedRVAdapter extends RecyclerView.Adapter<MyQuestionVi
 
     @Override
     public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+        if (dataSnapshot != null && dataSnapshot.getValue() != null) {
+            int pos = isContainedInList(dataSnapshot.getKey());
+            if (pos != -1) {
+                remove(get(pos));
+                mQuestions.remove(pos);
+                mNotifier.countChanged(mQuestions.size());
+            }
+        }
     }
 
     @Override
@@ -116,4 +135,13 @@ public class QuestionsIPostedRVAdapter extends RecyclerView.Adapter<MyQuestionVi
 
     }
     //endregion
+
+    @Override
+    public boolean areEqual(Question item1, Question item2) {
+        return item1.id.equals(item2.id);
+    }
+
+    public interface ChangeNotifier {
+        void countChanged(int count);
+    }
 }

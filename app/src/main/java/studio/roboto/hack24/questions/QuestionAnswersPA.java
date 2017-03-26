@@ -30,6 +30,11 @@ public class QuestionAnswersPA extends QuestionFragmentPagerAdapter {
     }
 
     @Override
+    public boolean reverseOrder() {
+        return true;
+    }
+
+    @Override
     public boolean showNew() {
         return false;
     }

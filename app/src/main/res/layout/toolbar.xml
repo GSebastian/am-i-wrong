@@ -4,6 +4,7 @@
     android:layout_height="?attr/actionBarSize"
     android:background="@color/transparent"
     android:elevation="0dp"
+    android:theme="@style/AppToolbar"
     app:popupTheme="@style/AppTheme.PopupOverlay"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android" />

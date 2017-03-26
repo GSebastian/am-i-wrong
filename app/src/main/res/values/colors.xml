@@ -12,4 +12,6 @@
     <color name="lightgray">#F5F5F5</color>
     <color name="lightergray">#F9F9F9</color>
     <color name="transparent_black">#33000000</color>
+    <color name="my_questions_search_hint">#BBFFFFFF</color>
+    <color name="my_questions_search_text">#F5F5F5</color>
 </resources>

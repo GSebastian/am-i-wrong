@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class SharedPrefsManager implements ISharedPrefsManager {
 
@@ -14,6 +15,7 @@ public class SharedPrefsManager implements ISharedPrefsManager {
     private static final String KEY_NAME = "name";
     private static final String KEY_MY_QUESTION_IDS = "my-question-ids";
     private static final String KEY_ANSWERED_QUESTION_IDS = "answered-question-ids";
+    private static final String KEY_HIDE_QUESTIONID = "hide-questions";
     private static final String KEY_ANSWERED_QUESTION_ID_YESNO = "answered-question-id-yesno-";
 
     public enum VOTED {
@@ -113,6 +115,24 @@ public class SharedPrefsManager implements ISharedPrefsManager {
         } else {
             return VOTED.UNANSWERED;
         }
+    }
+
+    @Override
+    public void markQuestionAsRemoved(String questionId) {
+        Set<String> value = mPrefs.getStringSet(KEY_HIDE_QUESTIONID, null);
+        if (value != null) {
+            value.add(questionId);
+            mPrefs.edit().putStringSet(KEY_HIDE_QUESTIONID, value).apply();
+        }
+    }
+
+    @Override
+    public boolean isQuestionRemoved(String questionId) {
+        Set<String> value = mPrefs.getStringSet(KEY_HIDE_QUESTIONID, null);
+        if (value != null) {
+            return value.contains(questionId);
+        }
+        return false;
     }
 
     private static final String APP_FIRST_OPEN = "app-first-open";

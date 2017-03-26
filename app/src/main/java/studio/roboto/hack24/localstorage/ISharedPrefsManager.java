@@ -19,4 +19,8 @@ public interface ISharedPrefsManager {
     public boolean haveIAnsweredQuestion(String question);
 
     public SharedPrefsManager.VOTED whatDidIAnswer(String question);
+
+    public void markQuestionAsRemoved(String questionId);
+
+    public boolean isQuestionRemoved(String questionId);
 }

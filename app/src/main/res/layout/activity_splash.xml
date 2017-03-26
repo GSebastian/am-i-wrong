@@ -5,9 +5,10 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:src="@drawable/splash"
+        android:background="@drawable/splash_background"
+        android:src="@drawable/logo"
         android:id="@+id/imageView2"
-        android:scaleType="centerCrop"
+        android:scaleType="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </RelativeLayout>
