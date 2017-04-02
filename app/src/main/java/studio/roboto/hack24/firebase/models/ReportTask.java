@@ -2,24 +2,25 @@ package studio.roboto.hack24.firebase.models;
 
 import java.util.Map;
 
-public class VoteTask extends Task {
+/**
+ * Created by sebastian on 27/03/2017.
+ */
 
-    public boolean yes;
+public class ReportTask extends Task {
+
     public String questionId;
 
-    public VoteTask(boolean yes, String questionId) {
-        this.yes = yes;
+    public ReportTask(String questionId) {
         this.questionId = questionId;
     }
 
-    public VoteTask() {
+    public ReportTask() {
     }
 
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> result = super.toMap();
 
-        result.put("yes", yes);
         result.put("questionId", questionId);
 
         return result;
@@ -27,6 +28,6 @@ public class VoteTask extends Task {
 
     @Override
     String getTaskType() {
-        return "vote";
+        return "report";
     }
 }

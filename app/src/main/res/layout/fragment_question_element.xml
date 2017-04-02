@@ -1,108 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
     <View
         android:id="@+id/commentView"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"/>
 
-    <RelativeLayout
-        android:elevation="4dp"
-        android:id="@+id/rlMain"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+    <Button
+        android:id="@+id/btnHide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/commentView"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:background="@null"
+        android:gravity="center_vertical|end"
+        android:text="@string/hide"
+        android:textColor="@color/white"/>
 
-        <TextView
-            android:paddingTop="72dp"
-            android:paddingLeft="32dp"
-            android:paddingRight="32dp"
-            android:paddingBottom="12dp"
-            android:textSize="22sp"
-            android:gravity="center"
-            android:id="@+id/tvQuestionTitle"
+    <RelativeLayout
+
+        android:id="@+id/rlMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btnHide"
+        android:layout_marginBottom="16dp"
+        android:background="@color/white"
+        android:elevation="4dp">
+
+        <RelativeLayout
+            android:id="@+id/rlHideableHeader"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvQuestionTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="12dp"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:paddingTop="32dp"
+                android:textSize="22sp"/>
+        </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvMain"
-            android:layout_above="@+id/etBackground"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            android:layout_above="@+id/etBackground"
+            android:clickable="false">
 
         </android.support.v7.widget.RecyclerView>
 
         <ImageView
-            android:alpha="0.0"
-            android:visibility="gone"
             android:id="@+id/etBackground"
-            android:background="@color/lightergray"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_alignTop="@+id/etContent"
-            android:layout_height="wrap_content" />
+            android:alpha="0.0"
+            android:background="@color/lightergray"
+            android:visibility="gone"/>
 
         <Button
-            android:enabled="false"
-            android:foreground="?attr/selectableItemBackground"
-            android:alpha="0.0"
-            android:elevation="0dp"
-            android:visibility="gone"
-            android:paddingBottom="8dp"
+            android:id="@+id/tvSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/etContent"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:padding="8dp"
+            android:alpha="0.0"
             android:background="@color/transparent"
-            android:id="@+id/tvSend"
+            android:elevation="0dp"
+            android:enabled="false"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="8dp"
+            android:paddingBottom="8dp"
             android:text="@string/send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/etContent" />
+            android:visibility="gone"/>
 
         <EditText
-            android:alpha="0.0"
-            android:visibility="gone"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:layout_marginTop="16dp"
+            android:id="@+id/etContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="16dp"
-            android:inputType="textCapSentences"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:layout_toLeftOf="@id/tvSend"
             android:layout_toStartOf="@id/tvSend"
+            android:alpha="0.0"
             android:background="@color/lightergray"
+            android:hint="@string/comment"
+            android:inputType="textCapSentences"
+            android:maxLines="4"
+            android:paddingBottom="12dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:maxLines="4"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:hint="@string/comment"
-            android:layout_height="wrap_content"
-            android:id="@+id/etContent" />
+            android:paddingTop="12dp"
+            android:visibility="gone"/>
 
         <ImageView
-            android:alpha="0.0"
-            android:visibility="gone"
-            android:src="@color/colorPrimary"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:id="@+id/etDivider"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:alpha="0.0"
+            android:src="@color/colorPrimary"
+            android:visibility="gone"/>
 
     </RelativeLayout>
-    
+
 </RelativeLayout>

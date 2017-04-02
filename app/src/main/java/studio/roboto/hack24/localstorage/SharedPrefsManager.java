@@ -135,6 +135,12 @@ public class SharedPrefsManager implements ISharedPrefsManager {
         return false;
     }
 
+    @Override
+    public boolean isThisMyQuestion(String questionId) {
+        List<String> myQuestionIds = getMyQuestionIds();
+        return getMyQuestionIds().contains(questionId);
+    }
+
     private static final String APP_FIRST_OPEN = "app-first-open";
 
     public boolean isFirstOpen() {

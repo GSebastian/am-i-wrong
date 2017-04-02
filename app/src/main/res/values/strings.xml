@@ -30,6 +30,15 @@
     <string name="tutorial_2">Then post it to the community and see what the rest of the world says</string>
     <string name="search">Search</string>
     <string name="no_questions">You haven\'t posted\nany questions yet</string>
+    <string name="hide">Hide</string>
+    <string name="why_do_you_want_to_hide_this_post">Why do you want to hide this question?</string>
+    <string name="i_just_don_t_want_to_see_it_anymore">I just don\'t want to see it anymore</string>
+    <string name="it_s_spam_offensive_or_contains_explicit_language">It\'s spam, offensive or contains explicit language</string>
+    <string name="hide_question">Hide This Question</string>
+    <string name="hide_question_confirmation">Are you sure you want to hide this question?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="report_feedback">Thank you for your feedback!</string>
 
     <string-array name="colors">
         <item>#50E3C2</item>

@@ -8,5 +8,5 @@ public interface YesNoCallback {
     void clickedYes();
     void clickedNo();
     int heightOfFrag();
-    int heightOfText();
+    int heightOfHideableHeader();
 }

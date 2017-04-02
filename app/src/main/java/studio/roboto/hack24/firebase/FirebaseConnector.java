@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import studio.roboto.hack24.Utils;
 import studio.roboto.hack24.firebase.models.Comment;
 import studio.roboto.hack24.firebase.models.Question;
+import studio.roboto.hack24.firebase.models.ReportTask;
 import studio.roboto.hack24.firebase.models.VoteTask;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
 import studio.roboto.hack24.questions.OnQuestionAddedListener;
@@ -108,6 +109,21 @@ public class FirebaseConnector {
         String newTaskKey = tasksNode.push().getKey();
 
         tasksNode.child(newTaskKey).setValue(voteTask.toMap());
+    }
+
+    public static void reportQuestion(String questionId) {
+        ReportTask reportTask = new ReportTask(questionId);
+
+        DatabaseReference tasksNode =
+                FirebaseManager
+                        .sharedInstance
+                        .databaseRef
+                        .child("Queue")
+                        .child("tasks");
+
+        String newTaskKey = tasksNode.push().getKey();
+
+        tasksNode.child(newTaskKey).setValue(reportTask.toMap());
     }
 
     public static DatabaseReference getRemoteNames() {

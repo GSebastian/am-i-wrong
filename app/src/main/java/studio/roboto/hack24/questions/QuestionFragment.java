@@ -16,6 +16,7 @@ import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import studio.roboto.hack24.HomeActivity;
 import studio.roboto.hack24.R;
+import studio.roboto.hack24.dialogs.ReportQuestionDialog;
 
 /**
  * Created by jordan on 18/03/17.
@@ -61,6 +62,12 @@ public class QuestionFragment extends Fragment implements OnQuestionAddedListene
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onDestroy() {
+        mAdapter.stop();
+        super.onDestroy();
+    }
+
     private void findViews(View v) {
         mEnchVP = (EnchantedViewPager) v.findViewById(R.id.enchVP);
         mEnchVP.useScale();
@@ -71,18 +78,11 @@ public class QuestionFragment extends Fragment implements OnQuestionAddedListene
         mAdapter = new QuestionMainPA(getFragmentManager(), getContext(), mEnchVP);
         mAdapter.setOnQuestionAddedListener(this);
         mEnchVP.setAdapter(mAdapter);
-
-//        if (!SharedPrefsManager.sharedInstance.isFirstOpen()) {
-//            mEnchVP.setCurrentItem(1);
-//        } else {
-//            SharedPrefsManager.sharedInstance.firstOpen();
-//        }
     }
 
-    @Override
-    public void onDestroy() {
-        mAdapter.stop();
-        super.onDestroy();
+    private void showHideDialog() {
+        ReportQuestionDialog dialog = ReportQuestionDialog.create(getContext(), "abc", null);
+        dialog.getDialog().show();
     }
 
     //region OnQuestionAddedListener

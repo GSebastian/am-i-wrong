@@ -79,7 +79,7 @@ public class QuestionRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 int height = mCallback.heightOfFrag() - mContext.getResources().getDimensionPixelSize(R.dimen.answer_height);
                 ((QuestionTransparentViewHolder)holder).init(height);
             } else {
-                int height = mCallback.heightOfText();
+                int height = mCallback.heightOfHideableHeader();
                 ((QuestionTransparentViewHolder)holder).init(height);
             }
         } else if (position == 1) {

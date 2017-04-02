@@ -23,4 +23,6 @@ public interface ISharedPrefsManager {
     public void markQuestionAsRemoved(String questionId);
 
     public boolean isQuestionRemoved(String questionId);
+
+    public boolean isThisMyQuestion(String questionId);
 }

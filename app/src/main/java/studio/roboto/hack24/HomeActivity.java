@@ -1,7 +1,6 @@
 package studio.roboto.hack24;
 
 import android.animation.ArgbEvaluator;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,7 +30,7 @@ import java.util.List;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
 import studio.roboto.hack24.mycontent.QuestionsPostedFragment;
 import studio.roboto.hack24.mycontent.QuestionAnswersFragment;
-import studio.roboto.hack24.questions.NameDialog;
+import studio.roboto.hack24.dialogs.NameDialog;
 import studio.roboto.hack24.questions.QuestionFragment;
 
 public class HomeActivity extends AppCompatActivity

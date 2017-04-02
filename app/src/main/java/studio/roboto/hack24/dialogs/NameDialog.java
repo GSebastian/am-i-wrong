@@ -1,9 +1,7 @@
-package studio.roboto.hack24.questions;
+package studio.roboto.hack24.dialogs;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +17,6 @@ import java.util.Random;
 
 import studio.roboto.hack24.R;
 import studio.roboto.hack24.firebase.FirebaseConnector;
-import studio.roboto.hack24.firebase.FirebaseManager;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
 /**

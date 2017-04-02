@@ -14,13 +14,9 @@ import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import studio.roboto.hack24.HomeActivity;
 import studio.roboto.hack24.R;
+import studio.roboto.hack24.dialogs.ReportQuestionDialog;
 import studio.roboto.hack24.questions.QuestionAnswersPA;
 import studio.roboto.hack24.questions.QuestionFragmentPagerAdapter;
-import studio.roboto.hack24.questions.QuestionMinePA;
-
-/**
- * Created by jordan on 18/03/17.
- */
 
 public class QuestionAnswersFragment extends Fragment {
 
@@ -37,7 +33,8 @@ public class QuestionAnswersFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
+            savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_questions, container, false);
 
         findViews(v);
@@ -46,27 +43,15 @@ public class QuestionAnswersFragment extends Fragment {
         return v;
     }
 
-    private void findViews(View v) {
-        mEnchVP = (EnchantedViewPager) v.findViewById(R.id.enchVP);
-        mEnchVP.useScale();
-        mEnchVP.addOnPageChangeListener((HomeActivity)getActivity());
-    }
-
-    private void initViews() {
-        mAdapter = new QuestionAnswersPA(getFragmentManager(), getContext(), mEnchVP);
-        mEnchVP.setAdapter(mAdapter);
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search_button, menu);
+        inflater.inflate(R.menu.question_answers, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_search) {
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -75,5 +60,24 @@ public class QuestionAnswersFragment extends Fragment {
     public void onDestroy() {
         mAdapter.stop();
         super.onDestroy();
+    }
+
+    private void findViews(View v) {
+        mEnchVP = (EnchantedViewPager) v.findViewById(R.id.enchVP);
+        mEnchVP.useScale();
+        mEnchVP.addOnPageChangeListener((HomeActivity) getActivity());
+    }
+
+    private void initViews() {
+        mAdapter = new QuestionAnswersPA(getFragmentManager(), getContext(), mEnchVP);
+        mEnchVP.setAdapter(mAdapter);
+    }
+
+    private void showHideDialog() {
+        // Accounting for the "new question" fragment
+        int questionPosition = mEnchVP.getCurrentItem() + 1;
+
+        ReportQuestionDialog dialog = ReportQuestionDialog.create(getContext(), "abc", null);
+        dialog.getDialog().show();
     }
 }

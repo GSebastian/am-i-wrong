@@ -9,9 +9,6 @@ import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,6 +20,9 @@ import android.widget.TextView;
 import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import studio.roboto.hack24.R;
+import studio.roboto.hack24.dialogs.HideQuestionDialog;
+import studio.roboto.hack24.dialogs.ReportFeedbackDialog;
+import studio.roboto.hack24.dialogs.ReportQuestionDialog;
 import studio.roboto.hack24.firebase.FirebaseConnector;
 import studio.roboto.hack24.firebase.models.Question;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
@@ -34,10 +34,15 @@ import studio.roboto.hack24.questions.viewholder.YesNoCallback;
 
 public class QuestionElementFragment extends Fragment implements YesNoCallback, View.OnClickListener, TextWatcher {
 
+    private static final int MODE_MINE = 0;
+    private static final int MODE_OTHERS = 1;
+
     private int mPosition;
     private int totalScroll = 0;
     private Question mQuestion;
     private boolean isUnlocked = false;
+
+    private int mMode;
 
     private EditText mEtComment;
     private ImageView mEtDivider;
@@ -46,12 +51,15 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback, 
     private RelativeLayout mRlMain;
     private LinearLayoutManager mLayoutManager;
     private TextView mTvQuestionTitle;
+    private Button mBtnHide;
+    private RelativeLayout mRlHideableHeader;
     private RecyclerView mRvMain;
     private QuestionRVAdapter mAdapter;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
+            savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_question_element, container, false);
 
         if (getArgs(v)) {
@@ -79,6 +87,11 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback, 
                         getArguments().getLong("QUESTION_YES", 0L),
                         getArguments().getLong("QUESTION_NO", 0L));
                 mQuestion.id = questionId;
+
+                mMode = SharedPrefsManager.sharedInstance.isThisMyQuestion(mQuestion.id) ?
+                        MODE_MINE :
+                        MODE_OTHERS;
+
                 return true;
             }
         }
@@ -89,15 +102,22 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback, 
         mTvQuestionTitle = (TextView) v.findViewById(R.id.tvQuestionTitle);
         mRvMain = (RecyclerView) v.findViewById(R.id.rvMain);
         mRlMain = (RelativeLayout) v.findViewById(R.id.rlMain);
+        mRlHideableHeader = (RelativeLayout) v.findViewById(R.id.rlHideableHeader);
 
         mEtComment = (EditText) v.findViewById(R.id.etContent);
         mEtDivider = (ImageView) v.findViewById(R.id.etDivider);
         mEtBackground = (ImageView) v.findViewById(R.id.etBackground);
         mEtSend = (Button) v.findViewById(R.id.tvSend);
+        mBtnHide = (Button) v.findViewById(R.id.btnHide);
     }
 
     private void initViews() {
-        mAdapter = new QuestionRVAdapter(getContext(), SharedPrefsManager.sharedInstance.whatDidIAnswer(mQuestion.id), this, mQuestion.id, mQuestion);
+        mAdapter = new QuestionRVAdapter(
+                getContext(),
+                SharedPrefsManager.sharedInstance.whatDidIAnswer(mQuestion.id),
+                this,
+                mQuestion.id,
+                mQuestion);
         mLayoutManager = new LinearLayoutManager(getContext()) {
             @Override
             public boolean canScrollVertically() {
@@ -111,8 +131,8 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback, 
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 totalScroll += dy;
-                float alpha = 1.0f - (2f * ((float)totalScroll / (float)heightOfText()));
-                mTvQuestionTitle.setAlpha(alpha);
+                float alpha = 1.0f - (2f * ((float) totalScroll / (float) heightOfHideableHeader()));
+                mRlHideableHeader.setAlpha(alpha);
             }
         });
         mTvQuestionTitle.setText(mQuestion.text);
@@ -126,6 +146,46 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback, 
         // Comment text
         mEtSend.setOnClickListener(this);
         mEtComment.addTextChangedListener(this);
+
+        mBtnHide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mMode == MODE_MINE) {
+                    showHideDialog();
+                } else if (mMode == MODE_OTHERS) {
+                    showReportDialog();
+                }
+            }
+        });
+    }
+
+    private void showHideDialog() {
+        HideQuestionDialog dialog = HideQuestionDialog.create(
+                getContext(),
+                mQuestion.id,
+                new HideQuestionDialog.QuestionHiddenListener() {
+                    @Override
+                    public void questionHidden(String questionId) {
+                        // TODO: Notify adapter to hide the question
+                    }
+                });
+        dialog.getDialog().show();
+    }
+
+    private void showReportDialog() {
+        ReportQuestionDialog dialog = ReportQuestionDialog.create(
+                getContext(),
+                mQuestion.id,
+                new ReportQuestionDialog
+                        .QuestionHiddenListener() {
+
+                    @Override
+                    public void questionHidden(String questionId) {
+                        ReportFeedbackDialog.create(getContext()).getDialog().show();
+                        // TODO: Notify adapter to hide the question
+                    }
+                });
+        dialog.getDialog().show();
     }
 
     public void clickedAnswer(boolean wasYes) {
@@ -139,6 +199,7 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback, 
         fadeIn(mEtDivider);
         fadeIn(mEtSend);
     }
+
     private void fadeIn(View v) {
         v.setVisibility(View.VISIBLE);
         v.animate()
@@ -158,7 +219,10 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback, 
         if (v == mEtSend) {
             SharedPrefsManager.VOTED vote = SharedPrefsManager.sharedInstance.whatDidIAnswer(mQuestion.id);
             if (vote != SharedPrefsManager.VOTED.UNANSWERED && mEtSend.getText().toString().trim().length() >= 1) {
-                FirebaseConnector.addComment(mQuestion.id, mEtComment.getText().toString().trim(), vote == SharedPrefsManager.VOTED.YES);
+                FirebaseConnector.addComment(
+                        mQuestion.id,
+                        mEtComment.getText().toString().trim(),
+                        vote == SharedPrefsManager.VOTED.YES);
                 mEtComment.setText("");
                 mLayoutManager.scrollToPosition(2);
             }
@@ -182,8 +246,8 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback, 
     }
 
     @Override
-    public int heightOfText() {
-        return mTvQuestionTitle.getHeight();
+    public int heightOfHideableHeader() {
+        return mRlHideableHeader.getHeight();
     }
     //endregion
 
