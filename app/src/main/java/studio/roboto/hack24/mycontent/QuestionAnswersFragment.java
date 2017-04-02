@@ -1,8 +1,13 @@
 package studio.roboto.hack24.mycontent;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +19,7 @@ import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import studio.roboto.hack24.HomeActivity;
 import studio.roboto.hack24.R;
-import studio.roboto.hack24.dialogs.ReportQuestionDialog;
+import studio.roboto.hack24.localstorage.SharedPrefsManager;
 import studio.roboto.hack24.questions.QuestionAnswersPA;
 import studio.roboto.hack24.questions.QuestionFragmentPagerAdapter;
 
@@ -24,6 +29,14 @@ public class QuestionAnswersFragment extends Fragment {
 
     private EnchantedViewPager mEnchVP;
     private QuestionFragmentPagerAdapter mAdapter;
+
+    private BroadcastReceiver mQuestionHiddenReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mAdapter = new QuestionAnswersPA(getFragmentManager(), getContext(), mEnchVP);
+            mEnchVP.setAdapter(mAdapter);
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +54,24 @@ public class QuestionAnswersFragment extends Fragment {
         initViews();
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        LocalBroadcastManager
+                .getInstance(getContext())
+                .registerReceiver(mQuestionHiddenReceiver, new IntentFilter(SharedPrefsManager.INTENT_QUESTION_HIDDEN));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        LocalBroadcastManager
+                .getInstance(getContext())
+                .unregisterReceiver(mQuestionHiddenReceiver);
     }
 
     @Override
@@ -71,13 +102,5 @@ public class QuestionAnswersFragment extends Fragment {
     private void initViews() {
         mAdapter = new QuestionAnswersPA(getFragmentManager(), getContext(), mEnchVP);
         mEnchVP.setAdapter(mAdapter);
-    }
-
-    private void showHideDialog() {
-        // Accounting for the "new question" fragment
-        int questionPosition = mEnchVP.getCurrentItem() + 1;
-
-        ReportQuestionDialog dialog = ReportQuestionDialog.create(getContext(), "abc", null);
-        dialog.getDialog().show();
     }
 }

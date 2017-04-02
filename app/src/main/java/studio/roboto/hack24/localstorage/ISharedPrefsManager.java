@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface ISharedPrefsManager {
 
+    public static final String INTENT_QUESTION_HIDDEN = "INTENT_QUESTION_HIDDEN";
+
     public void setCurrentName(String newName);
 
     public String getCurrentName();

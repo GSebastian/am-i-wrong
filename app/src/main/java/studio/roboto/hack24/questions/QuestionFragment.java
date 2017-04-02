@@ -1,9 +1,14 @@
 package studio.roboto.hack24.questions;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,7 +21,7 @@ import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
 import studio.roboto.hack24.HomeActivity;
 import studio.roboto.hack24.R;
-import studio.roboto.hack24.dialogs.ReportQuestionDialog;
+import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
 /**
  * Created by jordan on 18/03/17.
@@ -28,6 +33,17 @@ public class QuestionFragment extends Fragment implements OnQuestionAddedListene
 
     private EnchantedViewPager mEnchVP;
     private QuestionFragmentPagerAdapter mAdapter;
+
+    private BroadcastReceiver mQuestionHiddenReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mAdapter.setOnQuestionAddedListener(null);
+
+            mAdapter = new QuestionMainPA(getFragmentManager(), getContext(), mEnchVP);
+            mAdapter.setOnQuestionAddedListener(QuestionFragment.this);
+            mEnchVP.setAdapter(mAdapter);
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +61,24 @@ public class QuestionFragment extends Fragment implements OnQuestionAddedListene
         initViews();
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        LocalBroadcastManager
+                .getInstance(getContext())
+                .registerReceiver(mQuestionHiddenReceiver, new IntentFilter(SharedPrefsManager.INTENT_QUESTION_HIDDEN));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        LocalBroadcastManager
+                .getInstance(getContext())
+                .unregisterReceiver(mQuestionHiddenReceiver);
     }
 
     @Override
@@ -78,11 +112,6 @@ public class QuestionFragment extends Fragment implements OnQuestionAddedListene
         mAdapter = new QuestionMainPA(getFragmentManager(), getContext(), mEnchVP);
         mAdapter.setOnQuestionAddedListener(this);
         mEnchVP.setAdapter(mAdapter);
-    }
-
-    private void showHideDialog() {
-        ReportQuestionDialog dialog = ReportQuestionDialog.create(getContext(), "abc", null);
-        dialog.getDialog().show();
     }
 
     //region OnQuestionAddedListener

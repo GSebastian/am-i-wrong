@@ -1,10 +1,13 @@
 package studio.roboto.hack24.localstorage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -119,11 +122,18 @@ public class SharedPrefsManager implements ISharedPrefsManager {
 
     @Override
     public void markQuestionAsRemoved(String questionId) {
-        Set<String> value = mPrefs.getStringSet(KEY_HIDE_QUESTIONID, null);
+        Set<String> value = mPrefs.getStringSet(KEY_HIDE_QUESTIONID, new HashSet<String>());
         if (value != null) {
             value.add(questionId);
             mPrefs.edit().putStringSet(KEY_HIDE_QUESTIONID, value).apply();
+
+            sendQuestionHiddenBroadcast();
         }
+    }
+
+    private void sendQuestionHiddenBroadcast() {
+        Intent intent = new Intent(SharedPrefsManager.INTENT_QUESTION_HIDDEN);
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 
     @Override

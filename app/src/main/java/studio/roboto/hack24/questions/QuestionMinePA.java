@@ -21,7 +21,8 @@ public class QuestionMinePA extends QuestionFragmentPagerAdapter {
 
     @Override
     public boolean shouldAdd(Question question) {
-        return SharedPrefsManager.sharedInstance.getMyQuestionIds().contains(question.id);
+        return !SharedPrefsManager.sharedInstance.isQuestionRemoved(question.id) &&
+                SharedPrefsManager.sharedInstance.getMyQuestionIds().contains(question.id) ;
     }
 
     @Override

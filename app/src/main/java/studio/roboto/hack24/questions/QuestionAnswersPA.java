@@ -15,18 +15,21 @@ import studio.roboto.hack24.localstorage.SharedPrefsManager;
  */
 
 public class QuestionAnswersPA extends QuestionFragmentPagerAdapter {
-    public QuestionAnswersPA(FragmentManager manager, Context context, EnchantedViewPager enchantedViewPager) {
+
+    public QuestionAnswersPA(FragmentManager manager,
+                             Context context,
+                             EnchantedViewPager enchantedViewPager) {
         super(manager, context, enchantedViewPager);
     }
 
     @Override
     public boolean shouldAdd(Question question) {
-        return SharedPrefsManager.sharedInstance.haveIAnsweredQuestion(question.id);
+        return !SharedPrefsManager.sharedInstance.isQuestionRemoved(question.id) &&
+                SharedPrefsManager.sharedInstance.haveIAnsweredQuestion(question.id);
     }
 
     @Override
     public void added(Question question) {
-
     }
 
     @Override

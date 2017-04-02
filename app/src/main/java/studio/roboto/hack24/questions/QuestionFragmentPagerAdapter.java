@@ -17,7 +17,7 @@ import java.util.List;
 
 import studio.roboto.hack24.firebase.models.Question;
 
-public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter implements ChildEventListener {
+public abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAdapter implements ChildEventListener {
 
     private Context mContext;
     private List<Question> questions = new ArrayList<>();
@@ -27,8 +27,11 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
 
     private OnQuestionAddedListener mOnQuestionAddedListener;
 
-    public QuestionFragmentPagerAdapter(FragmentManager manager, Context context, EnchantedViewPager enchantedViewPager) {
+    public QuestionFragmentPagerAdapter(FragmentManager manager,
+                                        Context context,
+                                        EnchantedViewPager enchantedViewPager) {
         super(manager);
+
         this.mContext = context;
         this.mQuestionRef = getRef();
         this.mQuestionRef.addChildEventListener(this);
@@ -77,16 +80,26 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
             QuestionElementFragment frag = new QuestionElementFragment();
             Bundle b = new Bundle();
             b.putInt("KEY", position);
-            position -= (showNew() ? 1 : 0);
-            b.putString("QUESTION_ID", questions.get(position).id);
-            b.putString("QUESTION_TEXT", questions.get(position).text);
-            b.putLong("QUESTION_TIMESTAMP", questions.get(position).timestamp);
-            b.putLong("QUESTION_YES", questions.get(position).yes);
-            b.putLong("QUESTION_NO", questions.get(position).no);
+            int listPosition = reverseOrder() ?
+                    (showNew() ? 1 : 0) :
+                    (showNew() ? position - 1 : position);
+            b.putString("QUESTION_ID", questions.get(listPosition).id);
+            b.putString("QUESTION_TEXT", questions.get(listPosition).text);
+            b.putLong("QUESTION_TIMESTAMP", questions.get(listPosition).timestamp);
+            b.putLong("QUESTION_YES", questions.get(listPosition).yes);
+            b.putLong("QUESTION_NO", questions.get(listPosition).no);
             frag.setArguments(b);
 
             return frag;
         }
+    }
+
+    public void reset() {
+        questions.clear();
+        mQuestionRef.removeEventListener(this);
+        notifyDataSetChanged();
+
+//        mQuestionRef.addChildEventListener(this);
     }
 
     public boolean reverseOrder() {
@@ -97,10 +110,11 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
         mQuestionRef.removeEventListener(this);
     }
 
-	public void setOnQuestionAddedListener(OnQuestionAddedListener onQuestionAddedListener) {
+    public void setOnQuestionAddedListener(OnQuestionAddedListener onQuestionAddedListener) {
         this.mOnQuestionAddedListener = onQuestionAddedListener;
     }
 
+    //region Abstract methods
     public abstract boolean shouldAdd(Question question);
 
     public abstract void added(Question question);
@@ -108,6 +122,7 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
     public abstract boolean showNew();
 
     public abstract DatabaseReference getRef();
+    //endregion
 
     //region Callbacks ChildEventListener
     @Override
@@ -129,22 +144,18 @@ public  abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAd
 
     @Override
     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
     }
 
     @Override
     public void onChildRemoved(DataSnapshot dataSnapshot) {
-
     }
 
     @Override
     public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
     }
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
-
     }
     //endregion
 }
