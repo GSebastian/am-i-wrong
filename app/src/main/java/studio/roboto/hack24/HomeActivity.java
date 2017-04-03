@@ -27,23 +27,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import studio.roboto.hack24.dialogs.RandomNameDialog;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
 import studio.roboto.hack24.mycontent.QuestionsPostedFragment;
 import studio.roboto.hack24.mycontent.QuestionAnswersFragment;
-import studio.roboto.hack24.dialogs.NameDialog;
 import studio.roboto.hack24.questions.QuestionFragment;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, NameDialog.NameConfirmedCallback, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, View.OnClickListener {
 
-    private static final float STATUS_BAR_DARKEN_MULTIPLIER = 0.85f;
+    public static final float STATUS_BAR_DARKEN_MULTIPLIER = 0.85f;
 
     private View mViewColourChanger;
     private int[] mColoursForTransitions;
     private ArgbEvaluator mColorTransitioner;
     private ImageView mImgHeader;
     private TextView mTvName;
-    private NameDialog mNameDialog;
+    // private NameDialog mNameDialog;
     private ImageButton mEditName;
     private NavigationView mNavView;
 
@@ -77,9 +77,10 @@ public class HomeActivity extends AppCompatActivity
         showFragment(QuestionFragment.TAG);
         mNavView.getMenu().getItem(0).setChecked(true);
 
-        mNameDialog = NameDialog.create(this);
+        // mNameDialog = NameDialog.create(this);
         if (SharedPrefsManager.sharedInstance.isFirstOpen()) {
-            mNameDialog.getDialog(this).show();
+            // mNameDialog.getDialog(this).show();
+            showNameDialog();
             SharedPrefsManager.sharedInstance.firstOpen();
         }
     }
@@ -222,7 +223,6 @@ public class HomeActivity extends AppCompatActivity
     //endregion
 
     //region Callback Name Confirmed
-    @Override
     public void nameConfirmed(String name) {
         mTvName.setText("Commenting as: " + name);
     }
@@ -231,7 +231,12 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         if (v == mEditName) {
-            mNameDialog.getDialog(this).show();
+            showNameDialog();
         }
+    }
+
+    private void showNameDialog() {
+        RandomNameDialog dialog = new RandomNameDialog();
+        dialog.show(getSupportFragmentManager(), "RANDOM_NAME_DIALOG");
     }
 }

@@ -9,6 +9,7 @@ import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 import studio.roboto.hack24.firebase.FirebaseConnector;
 import studio.roboto.hack24.firebase.models.Question;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
+import studio.roboto.hack24.mycontent.QuestionsIPostedRVAdapter;
 
 /**
  * Created by jordan on 18/03/17.
@@ -16,10 +17,14 @@ import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
 public class QuestionAnswersPA extends QuestionFragmentPagerAdapter {
 
+    private ChangeNotifier mNotifier;
+
     public QuestionAnswersPA(FragmentManager manager,
                              Context context,
-                             EnchantedViewPager enchantedViewPager) {
+                             EnchantedViewPager enchantedViewPager, ChangeNotifier notifier) {
         super(manager, context, enchantedViewPager);
+        this.mNotifier = notifier;
+
     }
 
     @Override
@@ -30,6 +35,7 @@ public class QuestionAnswersPA extends QuestionFragmentPagerAdapter {
 
     @Override
     public void added(Question question) {
+        mNotifier.countChanged(getCount());
     }
 
     @Override
@@ -45,5 +51,9 @@ public class QuestionAnswersPA extends QuestionFragmentPagerAdapter {
     @Override
     public DatabaseReference getRef() {
         return FirebaseConnector.getQuestions();
+    }
+
+    public interface ChangeNotifier {
+        void countChanged(int count);
     }
 }

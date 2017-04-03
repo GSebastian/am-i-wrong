@@ -56,37 +56,28 @@ public class SharedPrefsManager implements ISharedPrefsManager {
 
     @Override
     public void addMyQuestionId(String questionId) {
-        String myQuestionIdsString = mPrefs.getString(KEY_MY_QUESTION_IDS, "");
-        List<String> myQuestionIds = getListFromString(myQuestionIdsString);
-
+        Set<String> myQuestionIds = mPrefs.getStringSet(KEY_MY_QUESTION_IDS, new HashSet<String>());
         myQuestionIds.add(questionId);
-
-        String newString = mapListToString(myQuestionIds);
 
         mPrefs
                 .edit()
-                .putString(KEY_MY_QUESTION_IDS, newString)
+                .putStringSet(KEY_MY_QUESTION_IDS, myQuestionIds)
                 .apply();
     }
 
     @Override
-    public List<String> getMyQuestionIds() {
-        String storedString = mPrefs.getString(KEY_MY_QUESTION_IDS, "");
-        return getListFromString(storedString);
+    public Set<String> getMyQuestionIds() {
+        return mPrefs.getStringSet(KEY_MY_QUESTION_IDS, new HashSet<String>());
     }
 
     @Override
     public void addAnsweredQuestionId(String questionId, boolean wasYes) {
-        String answeredQuestionsIdsString = mPrefs.getString(KEY_ANSWERED_QUESTION_IDS, "");
-        List<String> answeredQuestionsIds = getListFromString(answeredQuestionsIdsString);
-
+        Set<String> answeredQuestionsIds = mPrefs.getStringSet(KEY_ANSWERED_QUESTION_IDS, new HashSet<String>());
         answeredQuestionsIds.add(questionId);
 
-        String newString = mapListToString(answeredQuestionsIds);
-        System.out.println("newString = " + newString);
         mPrefs
                 .edit()
-                .putString(KEY_ANSWERED_QUESTION_IDS, newString)
+                .putStringSet(KEY_ANSWERED_QUESTION_IDS, answeredQuestionsIds)
                 .apply();
 
         mPrefs
@@ -96,9 +87,9 @@ public class SharedPrefsManager implements ISharedPrefsManager {
     }
 
     @Override
-    public List<String> getAnsweredQuestionsIds() {
-        String storedString = mPrefs.getString(KEY_ANSWERED_QUESTION_IDS, "");
-        return getListFromString(storedString);
+    public Set<String> getAnsweredQuestionsIds() {
+        return mPrefs.getStringSet(KEY_ANSWERED_QUESTION_IDS, new HashSet<String>());
+
     }
 
     @Override
@@ -147,8 +138,8 @@ public class SharedPrefsManager implements ISharedPrefsManager {
 
     @Override
     public boolean isThisMyQuestion(String questionId) {
-        List<String> myQuestionIds = getMyQuestionIds();
-        return getMyQuestionIds().contains(questionId);
+        Set<String> myQuestionIds = getMyQuestionIds();
+        return myQuestionIds.contains(questionId);
     }
 
     private static final String APP_FIRST_OPEN = "app-first-open";
@@ -163,30 +154,4 @@ public class SharedPrefsManager implements ISharedPrefsManager {
                 .putBoolean(APP_FIRST_OPEN, false)
                 .apply();
     }
-
-
-    //region Utility
-    private static final String DELIMITER = "#";
-
-    static String mapListToString(List<String> list) {
-        String result = "";
-        for (Object element : list) {
-            result += element;
-            result += DELIMITER;
-        }
-
-        return result;
-    }
-
-    static List<String> getListFromString(String string) {
-        String[] array = string.split(DELIMITER);
-        List<String> result = new ArrayList<>();
-
-        for (String item : array) {
-            result.add(item);
-        }
-
-        return result;
-    }
-    //endregion
 }

@@ -1,6 +1,7 @@
 package studio.roboto.hack24.localstorage;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ISharedPrefsManager {
 
@@ -12,11 +13,11 @@ public interface ISharedPrefsManager {
 
     public void addMyQuestionId(String questionId);
 
-    public List<String> getMyQuestionIds();
+    public Set<String> getMyQuestionIds();
 
     public void addAnsweredQuestionId(String questionId, boolean wasYes);
 
-    public List<String> getAnsweredQuestionsIds();
+    public Set<String> getAnsweredQuestionsIds();
 
     public boolean haveIAnsweredQuestion(String question);
 

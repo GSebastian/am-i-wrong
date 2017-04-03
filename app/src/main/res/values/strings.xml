@@ -39,6 +39,9 @@
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="report_feedback">Thank you for your feedback!</string>
+    <string name="ok">Ok!</string>
+    <string name="search_for_questions">What question are you looking for?\n\nYou can only search questions you\'ve previously answered</string>
+    <string name="question">Question...</string>
 
     <string-array name="colors">
         <item>#50E3C2</item>

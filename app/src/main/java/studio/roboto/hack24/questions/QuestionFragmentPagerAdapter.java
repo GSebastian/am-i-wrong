@@ -94,6 +94,15 @@ public abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAda
         }
     }
 
+    private boolean contains(Question question) {
+        for (Question q : questions) {
+            if (q.id.equals(question.id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void reset() {
         questions.clear();
         mQuestionRef.removeEventListener(this);
@@ -130,7 +139,8 @@ public abstract class QuestionFragmentPagerAdapter extends FragmentStatePagerAda
         if (dataSnapshot != null && dataSnapshot.getValue() != null) {
             Question question = dataSnapshot.getValue(Question.class);
             question.id = dataSnapshot.getKey();
-            if (shouldAdd(question)) {
+            System.out.println("question.id = " + question.id);
+            if (shouldAdd(question) && !contains(question)) {
                 if (reverseOrder()) {
                     questions.add(0, question);
                 } else {
