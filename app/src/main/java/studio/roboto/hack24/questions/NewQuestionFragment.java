@@ -20,6 +20,8 @@ import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 import java.util.Random;
 
 import studio.roboto.hack24.R;
+import studio.roboto.hack24.Utils;
+import studio.roboto.hack24.dialogs.PostingTooSoonDialog;
 import studio.roboto.hack24.firebase.FirebaseConnector;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
@@ -108,7 +110,7 @@ public class NewQuestionFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         if (view == mBtnAsk) {
 
-            if (!mEtQuestionInput.getText().toString().trim().equals("")) {
+            if (!mEtQuestionInput.getText().toString().trim().equals("") && Utils.canIPost()) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setCancelable(false);
@@ -142,10 +144,10 @@ public class NewQuestionFragment extends Fragment implements View.OnClickListene
                                 }
                             }
                         });
+            } else if (!Utils.canIPost()) {
+                new PostingTooSoonDialog().show(getFragmentManager(), "PostingTooSoonDialog");
             } else {
-
                 Snackbar.make(mTvCurrentLength, "You must enter a question", Snackbar.LENGTH_LONG).show();
-
             }
         }
     }

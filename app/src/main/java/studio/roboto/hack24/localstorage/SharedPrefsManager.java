@@ -6,10 +6,10 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+
+import studio.roboto.hack24.Utils;
 
 public class SharedPrefsManager implements ISharedPrefsManager {
 
@@ -20,6 +20,7 @@ public class SharedPrefsManager implements ISharedPrefsManager {
     private static final String KEY_ANSWERED_QUESTION_IDS = "answered-question-ids";
     private static final String KEY_HIDE_QUESTIONID = "hide-questions";
     private static final String KEY_ANSWERED_QUESTION_ID_YESNO = "answered-question-id-yesno-";
+    private static final String KEY_LAST_QUESTION_TIME = "last-question-time";
 
     public enum VOTED {
         UNANSWERED,
@@ -62,6 +63,7 @@ public class SharedPrefsManager implements ISharedPrefsManager {
         mPrefs
                 .edit()
                 .putStringSet(KEY_MY_QUESTION_IDS, myQuestionIds)
+                .putLong(KEY_LAST_QUESTION_TIME, Utils.getTimestamp())
                 .apply();
     }
 
@@ -89,7 +91,6 @@ public class SharedPrefsManager implements ISharedPrefsManager {
     @Override
     public Set<String> getAnsweredQuestionsIds() {
         return mPrefs.getStringSet(KEY_ANSWERED_QUESTION_IDS, new HashSet<String>());
-
     }
 
     @Override
@@ -142,6 +143,12 @@ public class SharedPrefsManager implements ISharedPrefsManager {
         return myQuestionIds.contains(questionId);
     }
 
+    @Override
+    public long getLastQuestionTime() {
+        return mPrefs.getLong(KEY_LAST_QUESTION_TIME, 0);
+    }
+
+    //region Utils
     private static final String APP_FIRST_OPEN = "app-first-open";
 
     public boolean isFirstOpen() {
@@ -154,4 +161,5 @@ public class SharedPrefsManager implements ISharedPrefsManager {
                 .putBoolean(APP_FIRST_OPEN, false)
                 .apply();
     }
+    //endregion
 }

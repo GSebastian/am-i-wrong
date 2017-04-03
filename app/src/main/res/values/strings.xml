@@ -47,6 +47,7 @@
     <string name="no_answers">You haven\'t answered \nany questions yet :(</string>
     <string name="no_results">No results found\n\nRemember you can only view questions you\'ve already answered here</string>
     <string name="am_i_wrong">Am I Wrong?</string>
+    <string name="post_too_soon">Oops! You can only post a question once every %1$d minutes. Please try again later.</string>
 
     <string-array name="colors">
         <item>#50E3C2</item>
