@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_marginTop="52dp"
+        android:paddingTop="32dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout">
+
+        <TextView
+            android:text="@string/why_do_you_want_to_hide_this_post"
+            android:paddingLeft="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingRight="16dp"
+            android:id="@+id/tvPostingAs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/llContainer"
+            android:orientation="vertical"
+            android:layout_below="@id/tvPostingAs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:textAllCaps="false"
+                android:text="@string/i_just_don_t_want_to_see_it_anymore"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:id="@+id/btnDontWantToo"
+                android:paddingBottom="8dp"
+                android:background="@color/lightergray"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:background="@color/dividerGray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <Button
+                android:textAllCaps="false"
+                android:text="@string/it_s_spam_offensive_or_contains_explicit_language"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:id="@+id/btnOffensive"
+                android:paddingBottom="8dp"
+                android:background="@color/lightergray"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:background="@drawable/white_circle"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/logo"
+        android:padding="2dp"
+        android:id="@+id/imgLogo"
+        android:layout_width="72dp"
+        android:layout_height="72dp" />
+
+</RelativeLayout>

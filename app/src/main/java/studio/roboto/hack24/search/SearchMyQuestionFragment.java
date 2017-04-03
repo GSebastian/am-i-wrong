@@ -22,6 +22,12 @@ import studio.roboto.hack24.R;
 
 public class SearchMyQuestionFragment extends DialogFragment {
 
+    /**
+     * NOTE: SearchMyQuestionActivity and SearchMyQuestionFragment are quite closely coupled! I know
+     *         it's not how it's supposed to work but it saved me some time. SearchMyQuestionFragment
+     *         will need to be decoupled from this in order to be reused
+     */
+
     private static final String SEARCH_TERMS = "SEARCH_TERMS";
 
     private String mSearchTerm;
@@ -62,7 +68,7 @@ public class SearchMyQuestionFragment extends DialogFragment {
     }
 
     private void initViews() {
-        mAdapter = new QuestionSearchPA(getFragmentManager(), getContext(), mEnchVP, mWordsToSearch);
+        mAdapter = new QuestionSearchPA(getFragmentManager(), getContext(), mEnchVP, mWordsToSearch, (SearchMyQuestionActivity) getActivity());
         mEnchVP.setAdapter(mAdapter);
     }
 

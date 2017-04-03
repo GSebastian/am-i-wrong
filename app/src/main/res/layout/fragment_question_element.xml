@@ -21,6 +21,20 @@
         android:text="@string/hide"
         android:textColor="@color/white"/>
 
+    <!-- Enabled if Hack24Application.ENABLE_ADMIN_MODE is on! Used to easily delete -->
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="center_vertical|end"
+        android:visibility="gone"
+        android:text="Delete"
+        android:textColor="@color/white"
+        android:layout_below="@+id/commentView"
+        android:layout_toLeftOf="@+id/btnHide"
+        android:layout_toStartOf="@+id/btnHide" />
+
     <RelativeLayout
 
         android:id="@+id/rlMain"

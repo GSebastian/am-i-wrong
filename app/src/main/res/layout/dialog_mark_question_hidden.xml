@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_marginTop="52dp"
+        android:paddingTop="32dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout">
+
+        <TextView
+            android:text="@string/hide_question_confirmation"
+            android:paddingLeft="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingRight="16dp"
+            android:id="@+id/tvPostingAs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/llContainer"
+            android:orientation="horizontal"
+            android:layout_below="@id/tvPostingAs"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <Button
+                android:textAllCaps="false"
+                android:text="@string/no_lower"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:id="@+id/btnNo"
+                android:paddingBottom="8dp"
+                android:background="@color/lightergray"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:background="@color/dividerGray"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:textAllCaps="false"
+                android:text="@string/yes_lower"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:id="@+id/btnYes"
+                android:paddingBottom="8dp"
+                android:background="@color/lightergray"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:background="@drawable/white_circle"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/logo"
+        android:padding="2dp"
+        android:id="@+id/imgLogo"
+        android:layout_width="72dp"
+        android:layout_height="72dp" />
+
+</RelativeLayout>

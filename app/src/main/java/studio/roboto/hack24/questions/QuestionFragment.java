@@ -34,16 +34,16 @@ public class QuestionFragment extends Fragment implements OnQuestionAddedListene
     private EnchantedViewPager mEnchVP;
     private QuestionFragmentPagerAdapter mAdapter;
 
-    private BroadcastReceiver mQuestionHiddenReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            mAdapter.setOnQuestionAddedListener(null);
-
-            mAdapter = new QuestionMainPA(getFragmentManager(), getContext(), mEnchVP);
-            mAdapter.setOnQuestionAddedListener(QuestionFragment.this);
-            mEnchVP.setAdapter(mAdapter);
-        }
-    };
+//    private BroadcastReceiver mQuestionHiddenReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            mAdapter.setOnQuestionAddedListener(null);
+//
+//            mAdapter = new QuestionMainPA(getFragmentManager(), getContext(), mEnchVP);
+//            mAdapter.setOnQuestionAddedListener(QuestionFragment.this);
+//            mEnchVP.setAdapter(mAdapter);
+//        }
+//    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,18 +67,18 @@ public class QuestionFragment extends Fragment implements OnQuestionAddedListene
     public void onResume() {
         super.onResume();
 
-        LocalBroadcastManager
-                .getInstance(getContext())
-                .registerReceiver(mQuestionHiddenReceiver, new IntentFilter(SharedPrefsManager.INTENT_QUESTION_HIDDEN));
+//        LocalBroadcastManager
+//                .getInstance(getContext())
+//                .registerReceiver(mQuestionHiddenReceiver, new IntentFilter(SharedPrefsManager.INTENT_QUESTION_HIDDEN));
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        LocalBroadcastManager
-                .getInstance(getContext())
-                .unregisterReceiver(mQuestionHiddenReceiver);
+//        LocalBroadcastManager
+//                .getInstance(getContext())
+//                .unregisterReceiver(mQuestionHiddenReceiver);
     }
 
     @Override

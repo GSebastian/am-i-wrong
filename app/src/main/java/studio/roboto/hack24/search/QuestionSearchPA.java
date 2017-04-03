@@ -20,27 +20,32 @@ import studio.roboto.hack24.questions.QuestionFragmentPagerAdapter;
 public class QuestionSearchPA extends QuestionFragmentPagerAdapter {
 
     private List<String> mWordsToCheck;
+    private NoResultNotifier mNotifier;
 
-    public QuestionSearchPA(FragmentManager manager, Context context, EnchantedViewPager enchantedViewPager, List<String> wordsToCheck) {
+    public QuestionSearchPA(FragmentManager manager, Context context, EnchantedViewPager enchantedViewPager,
+                            List<String> wordsToCheck, NoResultNotifier notifier) {
         super(manager, context, enchantedViewPager);
         this.mWordsToCheck = wordsToCheck;
+        this.mNotifier = notifier;
     }
 
     @Override
     public boolean shouldAdd(Question question) {
-        System.out.println("Processing (" + question.id + ") -- " + question.text);
         int count = 0;
         for (int i = 0; i < mWordsToCheck.size(); i++) {
             if (question.text.toLowerCase().contains(mWordsToCheck.get(i).toLowerCase())) {
                 count++;
             }
         }
-        if (count >= 1) {
-            System.out.println(" --> COUNT IS " + count + " :: " + mWordsToCheck.size());
-            System.out.println("SharedPrefsManager.sharedInstance.haveIAnsweredQuestion(question.id) = " + SharedPrefsManager.sharedInstance.haveIAnsweredQuestion(question.id));
-            System.out.println("SharedPrefsManager.sharedInstance.isQuestionRemoved(question.id) = " + SharedPrefsManager.sharedInstance.isQuestionRemoved(question.id));
+        boolean shouldAdd = count == mWordsToCheck.size()
+                && SharedPrefsManager.sharedInstance.haveIAnsweredQuestion(question.id)
+                && !SharedPrefsManager.sharedInstance.isQuestionRemoved(question.id);
+
+        if (shouldAdd) {
+            mNotifier.resultAdded();
         }
-        return count == mWordsToCheck.size() && SharedPrefsManager.sharedInstance.haveIAnsweredQuestion(question.id) && !SharedPrefsManager.sharedInstance.isQuestionRemoved(question.id);
+
+        return shouldAdd;
     }
 
     @Override
@@ -56,5 +61,9 @@ public class QuestionSearchPA extends QuestionFragmentPagerAdapter {
     @Override
     public DatabaseReference getRef() {
         return FirebaseConnector.getQuestions();
+    }
+
+    public interface NoResultNotifier {
+        void resultAdded();
     }
 }

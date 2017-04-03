@@ -16,11 +16,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
+import studio.roboto.hack24.Hack24Application;
 import studio.roboto.hack24.R;
-import studio.roboto.hack24.dialogs.HideQuestionDialog;
+import studio.roboto.hack24.dialogs.MarkQuestionRemovedDialog;
 import studio.roboto.hack24.dialogs.ReportFeedbackDialog;
 import studio.roboto.hack24.dialogs.ReportQuestionDialog;
 import studio.roboto.hack24.firebase.FirebaseConnector;
@@ -48,6 +50,7 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback, 
     private ImageView mEtDivider;
     private ImageView mEtBackground;
     private Button mEtSend;
+    private Button mBtnDelete;
     private RelativeLayout mRlMain;
     private LinearLayoutManager mLayoutManager;
     private TextView mTvQuestionTitle;
@@ -65,6 +68,19 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback, 
         if (getArgs(v)) {
             findViews(v);
             initViews();
+
+            if (Hack24Application.ADMIN_MODE) {
+                mBtnDelete = (Button) v.findViewById(R.id.btnDelete);
+                mBtnDelete.setVisibility(View.VISIBLE);
+                mBtnDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FirebaseConnector.getQuestion(mQuestion.id).setValue(null);
+                        FirebaseConnector.getComments(mQuestion.id).setValue(null);
+                        Toast.makeText(getContext(), "ADMIN MODE: Deleted question\n[" + mQuestion.text + "]", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
 
             return v;
         } else {
@@ -160,32 +176,13 @@ public class QuestionElementFragment extends Fragment implements YesNoCallback, 
     }
 
     private void showHideDialog() {
-        HideQuestionDialog dialog = HideQuestionDialog.create(
-                getContext(),
-                mQuestion.id,
-                new HideQuestionDialog.QuestionHiddenListener() {
-                    @Override
-                    public void questionHidden(String questionId) {
-                        // TODO: Notify adapter to hide the question
-                    }
-                });
-        dialog.getDialog().show();
+        MarkQuestionRemovedDialog dialog = MarkQuestionRemovedDialog.getInstance(mQuestion.id);
+        dialog.show(getFragmentManager(), "HIDE_DIALOG");
     }
 
     private void showReportDialog() {
-        ReportQuestionDialog dialog = ReportQuestionDialog.create(
-                getContext(),
-                mQuestion.id,
-                new ReportQuestionDialog
-                        .QuestionHiddenListener() {
-
-                    @Override
-                    public void questionHidden(String questionId) {
-                        ReportFeedbackDialog.create(getContext()).getDialog().show();
-                        // TODO: Notify adapter to hide the question
-                    }
-                });
-        dialog.getDialog().show();
+        ReportQuestionDialog dialog = ReportQuestionDialog.getInstance(mQuestion.id);
+        dialog.show(getFragmentManager(), "REPORT_DIALOG");
     }
 
     public void clickedAnswer(boolean wasYes) {

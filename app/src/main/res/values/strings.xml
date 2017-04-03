@@ -42,11 +42,15 @@
     <string name="ok">Ok!</string>
     <string name="search_for_questions">What question are you looking for?\n\nYou can only search questions you\'ve previously answered</string>
     <string name="question">Question...</string>
+    <string name="no_lower">No</string>
+    <string name="yes_lower">Yes</string>
+    <string name="no_answers">You haven\'t answered \nany questions yet :(</string>
+    <string name="no_results">No results found\n\nRemember you can only view questions you\'ve already answered here</string>
 
     <string-array name="colors">
         <item>#50E3C2</item>
         <item>#F89EF3</item>
-        <item>#000000</item>
+        <item>#162228</item>
         <!--<item>#388E3C</item>-->
         <!--<item>#7B1FA2</item>-->
         <!--<item>#E64A19</item>-->

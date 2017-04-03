@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,17 +29,23 @@ import static studio.roboto.hack24.HomeActivity.STATUS_BAR_DARKEN_MULTIPLIER;
  * Created by jordan on 03/04/17.
  */
 
-public class SearchMyQuestionActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+public class SearchMyQuestionActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, QuestionSearchPA.NoResultNotifier {
+
+    /**
+     * NOTE: SearchMyQuestionActivity and SearchMyQuestionFragment are quite closely coupled! I know
+     *         it's not how it's supposed to work but it saved me some time. SearchMyQuestionFragment
+     *         will need to be decoupled from this in order to be reused
+     */
 
     public static final String SEARCH_TERM = "SEARCH_TERM";
 
-    private Toolbar mToolbar;
-
-    private String mSearchTerm;
-
-    private View mViewColourChanger;
     private int[] mColoursForTransitions;
+    private String mSearchTerm;
     private ArgbEvaluator mColorTransitioner;
+
+    private Toolbar mToolbar;
+    private RelativeLayout mRlNoQuestions;
+    private View mViewColourChanger;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +62,7 @@ public class SearchMyQuestionActivity extends AppCompatActivity implements ViewP
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle(mSearchTerm);
     }
 
     private void getArgs() {
@@ -65,6 +73,7 @@ public class SearchMyQuestionActivity extends AppCompatActivity implements ViewP
 
     private void findViews() {
         mViewColourChanger = findViewById(R.id.viewColourChanger);
+        mRlNoQuestions = (RelativeLayout) findViewById(R.id.rlNoQuestions);
     }
 
     private void initViews() {
@@ -148,6 +157,15 @@ public class SearchMyQuestionActivity extends AppCompatActivity implements ViewP
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    //endregion
+
+    //region Callback for the Search Adapter inside the fragment
+
+    @Override
+    public void resultAdded() {
+        mRlNoQuestions.setVisibility(View.GONE);
     }
 
     //endregion

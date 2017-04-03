@@ -15,11 +15,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 
+import studio.roboto.hack24.Hack24Application;
 import studio.roboto.hack24.R;
-import studio.roboto.hack24.dialogs.HideQuestionDialog;
+import studio.roboto.hack24.dialogs.MarkQuestionRemovedDialog;
 import studio.roboto.hack24.dialogs.ReportFeedbackDialog;
 import studio.roboto.hack24.dialogs.ReportQuestionDialog;
 import studio.roboto.hack24.firebase.FirebaseConnector;
@@ -29,7 +31,6 @@ import studio.roboto.hack24.questions.viewholder.YesNoCallback;
 
 public class QuestionElementDialogFragment extends DialogFragment implements YesNoCallback, View.OnClickListener,
         TextWatcher {
-
 
     private static final int MODE_MINE = 0;
     private static final int MODE_OTHERS = 1;
@@ -52,6 +53,7 @@ public class QuestionElementDialogFragment extends DialogFragment implements Yes
     private RelativeLayout mRlHideableHeader;
     private RecyclerView mRvMain;
     private QuestionRVAdapter mAdapter;
+    private Button mBtnDelete;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +71,19 @@ public class QuestionElementDialogFragment extends DialogFragment implements Yes
         if (getArgs(v)) {
             findViews(v);
             initViews();
+
+            if (Hack24Application.ADMIN_MODE) {
+                mBtnDelete = (Button) v.findViewById(R.id.btnDelete);
+                mBtnDelete.setVisibility(View.VISIBLE);
+                mBtnDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FirebaseConnector.getQuestion(mQuestion.id).setValue(null);
+                        FirebaseConnector.getComments(mQuestion.id).setValue(null);
+                        Toast.makeText(getContext(), "ADMIN MODE: Deleted question\n[" + mQuestion.text + "]", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
 
             return v;
         } else {
@@ -164,32 +179,13 @@ public class QuestionElementDialogFragment extends DialogFragment implements Yes
     }
 
     private void showHideDialog() {
-        HideQuestionDialog dialog = HideQuestionDialog.create(
-                getContext(),
-                mQuestion.id,
-                new HideQuestionDialog.QuestionHiddenListener() {
-                    @Override
-                    public void questionHidden(String questionId) {
-                        // TODO: Notify adapter to hide the question
-                    }
-                });
-        dialog.getDialog().show();
+        MarkQuestionRemovedDialog dialog = MarkQuestionRemovedDialog.getInstance(mQuestion.id);
+        dialog.show(getFragmentManager(), "MARK_QUESTION_HIDDEN");
     }
 
     private void showReportDialog() {
-        ReportQuestionDialog dialog = ReportQuestionDialog.create(
-                getContext(),
-                mQuestion.id,
-                new ReportQuestionDialog
-                        .QuestionHiddenListener() {
-
-                    @Override
-                    public void questionHidden(String questionId) {
-                        ReportFeedbackDialog.create(getContext()).getDialog().show();
-                        // TODO: Notify adapter to hide the question
-                    }
-                });
-        dialog.getDialog().show();
+        ReportQuestionDialog dialog = ReportQuestionDialog.getInstance(mQuestion.id);
+        dialog.show(getFragmentManager(), "REPORT_QUESTION");
     }
 
     public void clickedAnswer(boolean wasYes) {

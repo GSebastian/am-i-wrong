@@ -9,6 +9,8 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import studio.roboto.hack24.R;
 import studio.roboto.hack24.firebase.FirebaseConnector;
@@ -18,27 +20,30 @@ import studio.roboto.hack24.localstorage.SharedPrefsManager;
  * Created by jordan on 03/04/17.
  */
 
-public class ReportQuestionDialog extends DialogFragment implements View.OnClickListener {
+public class MarkQuestionRemovedDialog extends DialogFragment implements View.OnClickListener {
 
-    private static final String QUESTION_ID = "QUESTION_ID";
+    public static final String QUESTION_ID = "QUESTION_ID";
 
     private String mQuestionId;
 
     private View mView;
-    private Button mBtnDontWantToo;
-    private Button mBtnOffensive;
+
+    private Button mBtnYes;
+    private Button mBtnNo;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = new Dialog(getActivity());
-        mView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_report_questions, null);
+        mView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_mark_question_hidden, null);
 
         getArgs();
         findViews(mView);
         initViews();
 
         dialog.setContentView(mView);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         return dialog;
@@ -51,37 +56,30 @@ public class ReportQuestionDialog extends DialogFragment implements View.OnClick
     }
 
     private void findViews(View v) {
-        mBtnDontWantToo = (Button) v.findViewById(R.id.btnDontWantToo);
-        mBtnOffensive = (Button) v.findViewById(R.id.btnOffensive);
+        mBtnYes = (Button) v.findViewById(R.id.btnYes);
+        mBtnNo = (Button) v.findViewById(R.id.btnNo);
     }
 
     private void initViews() {
-        mBtnDontWantToo.setOnClickListener(this);
-        mBtnOffensive.setOnClickListener(this);
+        mBtnNo.setOnClickListener(this);
+        mBtnYes.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (v == mBtnDontWantToo) {
-            if (mQuestionId != null) {
-                SharedPrefsManager.sharedInstance.markQuestionAsRemoved(mQuestionId);
-                dismiss();
-            }
+        if (v == mBtnNo) {
+            dismiss();
         }
-        if (v == mBtnOffensive) {
+        if (v == mBtnYes) {
             if (mQuestionId != null) {
                 SharedPrefsManager.sharedInstance.markQuestionAsRemoved(mQuestionId);
-                FirebaseConnector.reportQuestion(mQuestionId);
-                dismiss();
-
-                ReportFeedbackDialog dialog = ReportFeedbackDialog.getInstance();
-                dialog.show(getFragmentManager(), "FEEDBACK_DIALOG");
             }
+            dismiss();
         }
     }
 
-    public static ReportQuestionDialog getInstance(String questionId) {
-        ReportQuestionDialog dialog = new ReportQuestionDialog();
+    public static MarkQuestionRemovedDialog getInstance(String questionId) {
+        MarkQuestionRemovedDialog dialog = new MarkQuestionRemovedDialog();
         Bundle b = new Bundle();
         b.putString(QUESTION_ID, questionId);
         dialog.setArguments(b);
