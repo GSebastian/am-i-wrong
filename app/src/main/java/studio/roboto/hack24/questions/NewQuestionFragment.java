@@ -2,6 +2,7 @@ package studio.roboto.hack24.questions;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -107,38 +108,45 @@ public class NewQuestionFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         if (view == mBtnAsk) {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setCancelable(false);
-            builder.setView(R.layout.dialog_adding_message);
+            if (!mEtQuestionInput.getText().toString().trim().equals("")) {
 
-            final AlertDialog progressDialog = builder.create();
-            progressDialog.show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(false);
+                builder.setView(R.layout.dialog_adding_message);
 
-            FirebaseConnector.addQuestion(
-                    mEtQuestionInput.getText().toString().trim(),
-                    new OnQuestionAddedListener() {
-                        @Override
-                        public void questionAdded(String questionId) {
-                            progressDialog.hide();
+                final AlertDialog progressDialog = builder.create();
+                progressDialog.show();
 
-                            SharedPrefsManager.sharedInstance.addMyQuestionId(questionId);
+                FirebaseConnector.addQuestion(
+                        mEtQuestionInput.getText().toString().trim() + ". Am I Wrong?",
+                        new OnQuestionAddedListener() {
+                            @Override
+                            public void questionAdded(String questionId) {
+                                progressDialog.hide();
 
-                            mEtQuestionInput.setText(null);
+                                SharedPrefsManager.sharedInstance.addMyQuestionId(questionId);
 
-                            if (mOnQuestionAddedListener != null) {
-                                mOnQuestionAddedListener.questionAdded(questionId);
+                                mEtQuestionInput.setText(null);
+
+                                if (mOnQuestionAddedListener != null) {
+                                    mOnQuestionAddedListener.questionAdded(questionId);
+                                }
                             }
-                        }
 
-                        @Override
-                        public void questionAddFailed() {
-                            progressDialog.hide();
+                            @Override
+                            public void questionAddFailed() {
+                                progressDialog.hide();
 
-                            if (mOnQuestionAddedListener != null) {
-                                mOnQuestionAddedListener.questionAddFailed();
+                                if (mOnQuestionAddedListener != null) {
+                                    mOnQuestionAddedListener.questionAddFailed();
+                                }
                             }
-                        }
-                    });
+                        });
+            } else {
+
+                Snackbar.make(mTvCurrentLength, "You must enter a question", Snackbar.LENGTH_LONG).show();
+
+            }
         }
     }
 }

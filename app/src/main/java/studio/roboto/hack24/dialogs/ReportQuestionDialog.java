@@ -66,6 +66,9 @@ public class ReportQuestionDialog extends DialogFragment implements View.OnClick
             if (mQuestionId != null) {
                 SharedPrefsManager.sharedInstance.markQuestionAsRemoved(mQuestionId);
                 dismiss();
+
+                ReportFeedbackDialog dialog = ReportFeedbackDialog.getInstance();
+                dialog.show(getFragmentManager(), "FEEDBACK_DIALOG");
             }
         }
         if (v == mBtnOffensive) {

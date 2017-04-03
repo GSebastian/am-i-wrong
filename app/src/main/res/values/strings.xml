@@ -38,7 +38,7 @@
     <string name="hide_question_confirmation">Are you sure you want to hide this question?</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
-    <string name="report_feedback">Thank you for your feedback!</string>
+    <string name="report_feedback">Thank you for your feedback!\n\nIn the future we won\'t display this question again</string>
     <string name="ok">Ok!</string>
     <string name="search_for_questions">What question are you looking for?\n\nYou can only search questions you\'ve previously answered</string>
     <string name="question">Question...</string>
@@ -46,6 +46,7 @@
     <string name="yes_lower">Yes</string>
     <string name="no_answers">You haven\'t answered \nany questions yet :(</string>
     <string name="no_results">No results found\n\nRemember you can only view questions you\'ve already answered here</string>
+    <string name="am_i_wrong">Am I Wrong?</string>
 
     <string-array name="colors">
         <item>#50E3C2</item>
@@ -68,10 +69,14 @@
     </string-array>
 
     <string-array name="example_question">
-        <item>I just walked out of a shop without paying. Am I Wrong?</item>
-        <item>I just smuggled a llama from the city zoo. Was I right?</item>
-        <item>I took out the TV while playing Wrestling, and I am trying to hide it from my family, am I Wrong?</item>
-        <item>I\'m sick of taking care of my aging grandma, am I wrong for thinking that?</item>
+        <item>I just walked out of a shop without paying.</item>
+        <item>I just smuggled a llama from the city zoo.</item>
+        <item>I took out the TV while playing Wrestling, and I am trying to hide it from my family.</item>
+        <item>I\'m sick of taking care of my aging grandma.</item>
         <item>I just farted and blamed a kid.</item>
+        <item>I fed a vegetarian hot dogs, because I thought they were veggie.</item>
+        <item>I hit a bird with a golf ball and I think I killed it.</item>
+        <item>Eat a kids birthday cake before his birthday.</item>
+        <item>Tripped an old lady by accident.. Maybe..</item>
     </string-array>
 </resources>

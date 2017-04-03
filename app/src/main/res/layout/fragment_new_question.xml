@@ -70,6 +70,13 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:textSize="18sp"/>
 
+            <TextView
+                android:text="@string/am_i_wrong"
+                android:paddingBottom="8dp"
+                android:gravity="right|end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
