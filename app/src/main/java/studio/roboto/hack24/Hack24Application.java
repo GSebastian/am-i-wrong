@@ -15,7 +15,7 @@ public class Hack24Application extends Application {
 
         SharedPrefsManager.init(getApplicationContext());
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(false);
         FirebaseDatabase.getInstance().setLogLevel(Logger.Level.DEBUG);
     }
 }

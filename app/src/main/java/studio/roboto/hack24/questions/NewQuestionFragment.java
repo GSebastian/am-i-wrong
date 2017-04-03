@@ -19,6 +19,8 @@ import com.tiagosantos.enchantedviewpager.EnchantedViewPager;
 import java.util.Random;
 
 import studio.roboto.hack24.R;
+import studio.roboto.hack24.Utils;
+import studio.roboto.hack24.dialogs.PostingTooSoonDialog;
 import studio.roboto.hack24.firebase.FirebaseConnector;
 import studio.roboto.hack24.localstorage.SharedPrefsManager;
 
@@ -107,38 +109,43 @@ public class NewQuestionFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         if (view == mBtnAsk) {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setCancelable(false);
-            builder.setView(R.layout.dialog_adding_message);
+            if (Utils.canIPost()) {
 
-            final AlertDialog progressDialog = builder.create();
-            progressDialog.show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(false);
+                builder.setView(R.layout.dialog_adding_message);
 
-            FirebaseConnector.addQuestion(
-                    mEtQuestionInput.getText().toString().trim(),
-                    new OnQuestionAddedListener() {
-                        @Override
-                        public void questionAdded(String questionId) {
-                            progressDialog.hide();
+                final AlertDialog progressDialog = builder.create();
+                progressDialog.show();
 
-                            SharedPrefsManager.sharedInstance.addMyQuestionId(questionId);
+                FirebaseConnector.addQuestion(
+                        mEtQuestionInput.getText().toString().trim(),
+                        new OnQuestionAddedListener() {
+                            @Override
+                            public void questionAdded(String questionId) {
+                                progressDialog.hide();
 
-                            mEtQuestionInput.setText(null);
+                                SharedPrefsManager.sharedInstance.addMyQuestionId(questionId);
 
-                            if (mOnQuestionAddedListener != null) {
-                                mOnQuestionAddedListener.questionAdded(questionId);
+                                mEtQuestionInput.setText(null);
+
+                                if (mOnQuestionAddedListener != null) {
+                                    mOnQuestionAddedListener.questionAdded(questionId);
+                                }
                             }
-                        }
 
-                        @Override
-                        public void questionAddFailed() {
-                            progressDialog.hide();
+                            @Override
+                            public void questionAddFailed() {
+                                progressDialog.hide();
 
-                            if (mOnQuestionAddedListener != null) {
-                                mOnQuestionAddedListener.questionAddFailed();
+                                if (mOnQuestionAddedListener != null) {
+                                    mOnQuestionAddedListener.questionAddFailed();
+                                }
                             }
-                        }
-                    });
+                        });
+            } else {
+                new PostingTooSoonDialog().show(getFragmentManager(), "PostingTooSoonDialog");
+            }
         }
     }
 }

@@ -42,6 +42,7 @@
     <string name="ok">Ok!</string>
     <string name="search_for_questions">What question are you looking for?\n\nYou can only search questions you\'ve previously answered</string>
     <string name="question">Question...</string>
+    <string name="post_too_soon">Oops! You can only post a question once every %1$d minutes. Please try again later.</string>
 
     <string-array name="colors">
         <item>#50E3C2</item>
