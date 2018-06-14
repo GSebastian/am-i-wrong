@@ -7,7 +7,7 @@ public class FirebaseManager {
 
     public static FirebaseManager sharedInstance = new FirebaseManager();
 
-    public static final String FIR_ROOT = "***REMOVED***/";
+    public static final String FIR_ROOT = "SANITIZED";
 
     public final DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
 
